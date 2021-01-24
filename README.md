@@ -3,6 +3,8 @@
 - Client: Html, CSS, Bootstrap, Javascript, JQuery Ajax.
 - HTTP server responses: html or Json.
 
+![Rookie](https://github.com/zhangsaili/Rookie/tree/master/public/assets/images/Rookie-welcome.png)
+
 ## Public project
 - Author : Cyril VASSALLO
 - Project: 2021
