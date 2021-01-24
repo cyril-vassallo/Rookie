@@ -1,0 +1,26 @@
+{   
+    "name": "rookie/rookie",
+    "description": "ROOKIE is a PHP very lightweight framework for rookie developers",
+    "version": "0.1.1",
+    "type": "project",
+    "keywords": ["framework", "rookie", "beginner", "PHP", "scratch", "basics"],
+    "homepage": "http://rookie.infinity-dev.fr",
+    "readme": "README.md",
+    "time": "2021-01-24",
+    "license": "OPEN SOURCE CODE",
+    "authors": [
+        {
+            "name": "Cyril VASSALLO",
+            "email": "cyrilvssll34@gmail.fr",
+            "homepage": "https://infinity-dev.fr",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "cyrilvssll34@gmail.fr"
+    },
+    "require": {
+        "twig/twig": "^3.0",
+        "vlucas/phpdotenv": "^5.3"
+    }
+}

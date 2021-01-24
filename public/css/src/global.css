@@ -1,0 +1,30 @@
+
+body{
+    background-image: url('../../assets/images/Rookie2.jpg');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+    
+
+
+/* VARIABLE CSS-GENERAL */
+
+:root {
+    /* Emity chart color */
+    --first-color: #31bad0;
+    --second-color: #e7267a;
+    --third-color: #ffdd00;
+    --fourth-color: #e62a2e;
+    --fifth-color: #47b062;
+    --sixth-color: #6f327e;
+    --seven-color:#c6c6c6;
+    --eight-color:#dadada;
+    /* Custom */
+    --navbar-color:rgb(55, 0, 128);
+    --white-color: white;
+    --gray-color: gray;
+    --black-color: black;
+    --transparent: rgba(0,0,0,1);
+}
+

@@ -1,0 +1,84 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Movies {% endblock %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" type="text/css" href="public/css/library/dataTables/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="public/css/library/dataTables/dataTables.min.css" />
+    <link rel="stylesheet" href="public/css/src/movies.css" />
+{% endblock %}
+
+{% block body %}
+<div class="section">
+    <section>
+        <div class="container">
+            <div class="row mb-5 mt-5 justify-content-center">
+                <div class="col-5">
+                    <h1 style="color:cadetblue;text-align:center">List of movies</h1>
+                </div>
+            </div>
+        </div>
+        <div class="container mb-5">
+            <table class="display table table-hover" style="width:100%" id="movieTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>TITLE</th>
+                        <th>DATE</th>
+                        <th>DURATION</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for movie in movies %}
+                    <tr>
+                        <td id="id_{{movie.id}}">{{movie.id}}</td>
+                        <td id="title_{{movie.id}}">{{movie.title}}</td>
+                        <td id="date_{{movie.id}}">{{movie.createdAt|date('yy/m/d',false) }}</td>
+                        <td id="duration_{{movie.id}}">{{movie.duration}}</td>
+                        <td>
+                            <button id="select_{{movie.id}}" type="button" class="btn btn-primary">
+                                Select
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <form method="POST" action="confirm" class="container">
+            <div class="form-group">
+                <label for="id_movie">Id</label>
+                <input placeholder="empty" class="form-control" type="text" name="id_movie" id="id_movie" disabled />
+            </div>
+            <div class="form-group">
+                <label for="title_movie">Title</label>
+                <input placeholder="empty" class="form-control" type="text" name="title_movie" id="title_movie" />
+            </div>
+            <div class="form-group">
+                <label for="createdAt_movie">CreatedAt</label>
+                <input placeholder="empty" class="form-control" type="text" name="createdAt_movie" id="createdAt_movie" />
+            </div>
+            <div class="form-group">
+                <label for="duration_movie">Duration</label>
+                <input placeholder="empty" class="form-control" type="text" name="duration_movie" id="duration_movie" />
+            </div>
+            <div class="row justify-content-center my-5">
+                <button type="button" name='create' class="btn btn-success mx-2" id="btn_create">CREATE</button>
+                <button type="button" name="update" class="btn btn-primary mx-2" id="btn_update">UPDATE</button>
+                <button type="button" name="delete" class="btn btn-danger mx-2" id="btn_delete">DELETE</button>
+                <button type="button" name="cancel" class="btn btn-info mx-2" id="btn_cancel" onclick="clearFields()">CANCEL</button>
+            </div>
+        </form>
+    </section>
+</div>
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript" src="public/js/library/dataTables/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="public/js/library/dataTables/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="public/js/library/dataTables/dataTables.min.js"></script>
+    <script type="text/javascript" src="public/js/src/utils.js"></script>
+    <script type="text/javascript" src="public/js/src/movies.js"></script>
+    <script type="text/javascript" src="public/js/src/movies_ajax.js"></script>
+{% endblock %}

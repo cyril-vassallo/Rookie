@@ -1,0 +1,16 @@
+table td, table th {
+    background-color: #fff9;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: #ffffff; 
+    opacity: 0.5;
+}
+
+.form-control {
+    background-color: #fffd;
+}
+
+.form-group label {
+    color: var(--white-color);
+}

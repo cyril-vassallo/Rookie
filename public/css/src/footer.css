@@ -1,0 +1,33 @@
+/* FOOTER - */
+
+.ftr-content {
+    color: var(--white-color);
+    background-position: center; /* Center the image */
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    height: 100px;
+}
+
+    
+
+.ftr-links {
+    display: flex;
+    color: var(--white-color)!important;
+}
+
+.ftr-link a{
+    color: var(--white-color)!important;
+    margin: 0px 15px;
+    font-weight: bold;
+}
+
+
+/* Media Query-FOOTER */
+
+@media only screen and (max-width: 721px) {
+    .ftr-content {
+        overflow: hidden;
+    }
+}

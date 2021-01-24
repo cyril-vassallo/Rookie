@@ -1,0 +1,65 @@
+body{
+    background-image: url('../../assets/images/Rookie.jpg');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.welcome-page section{
+    margin-top: 200px    ;
+}
+
+.welcome-page .welcomeMessage, .presentation p, .notice p  {
+
+    margin: 3rem;
+    text-align: center;
+    color: white;
+    font-family:'Gill Sans''Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.welcome-page .presentation{
+    padding: 50px;
+}
+
+.welcome-page.notice p{
+    text-align: center;
+    color: rgb(216, 216, 216);
+    font-family:'Gill Sans''Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.welcome-page .notice a{
+    font-weight: bolder;
+    color: rgb(62, 128, 250);
+}
+
+.welcome-page .welcomeMessage {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+
+.welcome-page #logo{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 7rem;
+}
+
+.welcome-page.logo-zone{
+    margin-top: 100px;
+}
+
+
+.welcome-page section{
+    background-color: rgba(0, 0, 0, 0.719);
+    width: 1040px;
+    margin: auto;
+    margin-top:150px
+}
+
+@media screen and (max-width: 1140px) {
+    .welcome-page section{
+        margin-top:50px;
+        width: 540px;
+    }
+  }

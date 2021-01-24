@@ -1,0 +1,17 @@
+# Follow symbolic links :
+Options +FollowSymlinks -MultiViews
+
+# RewriteEngine activation :
+RewriteEngine on
+
+#--------------------------------------------------
+# URL RewriteRule :
+#--------------------------------------------------
+
+# Redirection on route with one query string param
+RewriteRule ^([a-z_]*)$   public/index.php?route=$1 [L]
+RewriteRule ^([a-z_]*)/$   public/index.php?route=$1 [L]
+
+# Redirection on route with two query string params
+RewriteRule ^([a-z_]*)/([a-z0-9_]*)$   public/index.php?route=$1&param=$2 [L]
+RewriteRule ^([a-z_]*)/([a-z0-9_]*)/$   public/index.php?route=$1&param=$2 [L]

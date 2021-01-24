@@ -1,0 +1,1 @@
+select id, title, created_at, duration from movie order by title
