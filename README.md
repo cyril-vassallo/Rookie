@@ -1,6 +1,4 @@
-# ROOKIE - 2021
-Is a PHP from scratch very lightweight framework for rookie developers (2Mo)
-
+# ROOKIE  is a PHP from scratch very lightweight framework for rookie developers (3Mo)
 - Server: PHP, MySQL
 - Client: Html, CSS, Bootstrap, Javascript, JQuery Ajax.
 - HTTP server responses Content-type:application/json or text/html
