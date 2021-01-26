@@ -25,12 +25,6 @@ require $router->getControllerPath();
 $ControllerName = $router->getControllerName();
 $app = new $ControllerName(); 
 
-
-
-if ((isset($app->request->bJSON)) && ($app->request->bJSON == 1)) {
-    require $PATH['PATH_ROOT'].$PATH["PATH_HTTP"].'jsonResponse.php';
-}
-
 //destroy the app object
 unset($app);
 

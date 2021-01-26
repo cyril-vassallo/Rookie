@@ -59,13 +59,18 @@ class MoviesServices extends Initialize	{
 	 * @return void
 	 */
 	public function insertMovie(array $payload)	{
+
 		$pathSQL = $this->PATH["PATH_ROOT"] . $this->PATH["PATH_SQL"] . "movies/insert_movie.sql";
 		$this->database->treatData($pathSQL , array(
 													"title" => $payload["title"], 
 													"created_at" => $payload["created_at"], 
 													"duration" => $payload["duration"]
 													));
-		$this->queryResults["id"] = $this->database->getLastInsertId();
+		$id = $this->database->getLastInsertId();
+		if($id){
+			$payload = ['id' => $id];
+			$this->selectMovie($payload);
+		}
 	}
 	
 

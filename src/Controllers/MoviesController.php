@@ -20,14 +20,13 @@ class MoviesController extends Controller {
 		parent::__construct();
 		$this->moviesService = new MoviesServices();
 		$this->MoviesController($this->request->method, $this->request->bJSON);
-		echo $this->request->bJSON;
 	}
-
+	
 	public function __destruct()	{
 		parent::__destruct();
 		unset($this->moviesService);
 	}
-
+	
 	/**
 	 * Control the action server according to different methods for the movies route 
 	 *
@@ -43,8 +42,7 @@ class MoviesController extends Controller {
 			$this->PostMovie($this->request->payload);
 		}else if($bJSON && $method === 'PUT'){
 			$this->PutMovie($this->request->payload);
-		}else if($bJSON && $method === 'GET'){
-			echo $method;
+		}else if($bJSON && $method === 'GET'){	
 			$this->GetMovie($this->request->payload);
 		}
 	}
@@ -68,7 +66,7 @@ class MoviesController extends Controller {
 	 * @method: 'DELETE'
 	 * @Response: 'Content-Type: application/json'
 	 */
-	private function deleteMovie(array $payload)	{
+	private function DeleteMovie(array $payload)	{
 		$this->moviesService->deleteMovie($payload);
 		$this->JSON($this->moviesService->getQueryResults(),200);
 	}
@@ -79,8 +77,10 @@ class MoviesController extends Controller {
 	 * @method: 'POST'
 	 * @Response: 'Content-Type: application/json'
 	 */
-	private function postMovie(array $payload){
-		
+	private function PostMovie(array $payload){
+		$this->moviesService->insertMovie($payload);
+		//var_dump($this->moviesService->getQueryResults());
+		$this->JSON($this->moviesService->getQueryResults(),200);
 	}
 
 	/**
@@ -89,7 +89,7 @@ class MoviesController extends Controller {
 	 * @method: 'PUT'
 	 * @Response: 'Content-Type: application/json'
 	 */
-	private function putMovie(array $payload){
+	private function PutMovie(array $payload){
 		
 	}
 
@@ -99,7 +99,7 @@ class MoviesController extends Controller {
 	 * @method: 'GET'
 	 * @Response: 'Content-Type: application/json'
 	 */
-	private function getMovie(array $payload){
+	private function GetMovie(array $payload){
 		$this->moviesService->selectMovie($payload);
 		$this->JSON($this->moviesService->getQueryResults(),200);
 		

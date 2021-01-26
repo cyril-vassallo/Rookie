@@ -32,12 +32,12 @@
                 <tbody>
                     {% for movie in movies %}
                     <tr>
-                        <td id="id_{{movie.id}}">{{movie.id}}</td>
-                        <td id="title_{{movie.id}}">{{movie.title}}</td>
-                        <td id="date_{{movie.id}}">{{movie.createdAt|date('yy/m/d',false) }}</td>
-                        <td id="duration_{{movie.id}}">{{movie.duration}}</td>
+                        <td>{{movie.id}}</td>
+                        <td>{{movie.title}}</td>
+                        <td>{{movie.createdAt|date('yy/m/d',false) }}</td>
+                        <td>{{movie.duration}}</td>
                         <td>
-                            <button id="select_{{movie.id}}" type="button" class="btn btn-primary">
+                            <button data-id="{{movie.id}}" type="button" class="btn btn-primary selectButton">
                                 Select
                             </button>
                         </td>

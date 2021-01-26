@@ -8,40 +8,62 @@ use Rookie\Kernel\Configuration;
  */
 class Request {
 
-	public $body;
+	private $PATH;
+	public $method;
+	public $bJSON;
 	public $query;
 	public $payload;
-	public $bJSON;
-	public $method;
 	
 	function __construct()	{
-		$this->body= [];
+		$this->PATH = Configuration::getPaths();
 		$this->query= [];
 		$this->payload = [];
 		$this->bJSON = true;
 		$this->method = 'VIEW';
-		$this->PATH = Configuration::getPaths();
+		$this->setPostPayload();
+		$this->setGetQuery();
+		$this->isRouteParamExist();
+		$this->isJsonParamExist();
+		$this->isMethodParamExist();
+	}
 
+	private function setPostPayload(){
 		foreach($_POST as $key => $val)	{
-			$this->body[$key]= htmlspecialchars($val, ENT_QUOTES);
 			$this->payload[$key]= htmlspecialchars($val, ENT_QUOTES);
-			
-		}
-
-		foreach($_GET as $key => $val)	{
-			$this->query[$key]= htmlspecialchars($val, ENT_QUOTES);
-			$this->payload[$key]= htmlspecialchars($val, ENT_QUOTES);
-		}
-
-		if ((!isset($this->payload["route"])) || $this->payload["route"] == '')	{
-			$this->payload["route"] = $this->PATH['DEFAULT_ROUTE'];
-		}
-		if(!(isset($this->payload["bJSON"])) || $this->payload["bJSON"] == false) {
-			$this->bJSON = false;
-		}
-		if(!(isset($this->payload["method"])) || $this->payload["method"] == '') {
-			$this->method = strtoupper($this->payload["method"] = 'VIEW');
 		}
 	}
+
+	private function setGetQuery(){
+		foreach($_GET as $key => $val)	{
+			$this->query[$key]= htmlspecialchars($val, ENT_QUOTES);
+		}
+	}
+
+	private function isRouteParamExist(){
+		if ((!isset($this->payload["route"])) || $this->payload["route"] == '')	{
+			$routesIniFile = $this->PATH["PATH_ROOT"] . $this->PATH["PATH_CONF"] . 'routes.ini';
+			if(is_file($routesIniFile))	{
+				$parsedRoutesFile = parse_ini_file($routesIniFile, false);
+				$this->payload["route"] = $parsedRoutesFile['DEFAULT_ROUTE'];
+			}
+		}
+	}
+
+	private function isJsonParamExist(){
+		if(!(isset($this->payload["bJSON"])) || $this->payload["bJSON"] == false) {
+			$this->bJSON = false;
+		}else{
+			$this->bJSON = true;
+		}
+	}
+	
+	private function isMethodParamExist(){
+		if(!(isset($this->payload["method"])) || $this->payload["method"] == '') {
+			$this->method = strtoupper($this->payload["method"] = 'VIEW');
+		}else {
+			$this->method = $this->payload['method'];
+		}
+	}
+	
 }
 ?>
