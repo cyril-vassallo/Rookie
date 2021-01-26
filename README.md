@@ -1,6 +1,6 @@
 # ROOKIE - 2021
 
-![Rookie](/public/assets/images/Rookie-welcome.png "Rookie")
+![Rookie](/public/assets/images/Rookie-welcome.png "Rookie")	
 
 Rookie is a PHP from scratch very lightweight framework for rookie developers (2Mo)
 - Server: PHP, MySQL
@@ -14,7 +14,7 @@ Rookie-welcome.png
 - Author : Cyril VASSALLO
 - Project: 2021
 
-# What is Rookie PHP ? 
+# What is Rookie ? 
 
 ## Made for Learning
 Rookie has been build for new developer that are learning PHP.
