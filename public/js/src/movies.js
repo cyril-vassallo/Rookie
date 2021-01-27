@@ -17,6 +17,7 @@ class Movies {
         this.listeners.handleClickOnEachCopyButton(this.ajaxMovies.getMovie, this.successGetMovie);
         this.listeners.handleClickOnCreateButton(this.ajaxMovies.postMovie, this.successPostMovie);
         this.listeners.handleClickOnDeleteButton(this.ajaxMovies.deleteMovie, this.successDeleteMovie);
+        this.listeners.handleClickOnUpdateButton(this.ajaxMovies.putMovie, this.successPutMovie);
     }
 
     successGetMovie = function(response){
@@ -31,10 +32,10 @@ class Movies {
         try{
             let movie = response[0];
             console.log(`The movie ${movie.title} has been created`);
-            window.location = 'movies';
-            ajaxMovies.getMovies(this.data, this.successGetMovies);
+            //window.location = 'movies';
         }catch(e){
-            window.location = 'movies';
+            console.log(e);
+            //window.location = 'movies';
         }
            
     }
@@ -50,8 +51,15 @@ class Movies {
             window.location = 'movies';
         }
     }
+
     successPutMovie = function(response){
-        clear.clearMovieForm();
+        try{
+            let movie = response[0];
+            console.log(`The movie ${movie.title} has been updated`);
+            //window.location = 'movies';
+        }catch(e){
+            //window.location = 'movies';
+        }
     }
 }
 
@@ -101,6 +109,20 @@ class Listeners {
         let cancelButton =  document.querySelector("#btn_cancel");
         cancelButton.addEventListener('click', function(){
             clear.clearMovieForm();
+        });
+    }
+
+    handleClickOnUpdateButton = function(putMovie, success){
+        let updateButton =  document.querySelector("#btn_update");
+        updateButton.addEventListener('click', function(){
+            let data = {
+                id: document.querySelector('#id_movie').value,
+                title:  document.querySelector('#title_movie').value,
+                created_at: document.querySelector('#createdAt_movie').value,
+                duration: document.querySelector('#duration_movie').value,
+            };
+            putMovie(data, success)
+
         });
     }
 }
@@ -182,6 +204,33 @@ class AjaxMovies {
             method : 'POST',
             route : "movies",
             bJSON : true, 
+            title: data.title,
+            created_at: data.created_at,
+            duration: data.duration
+        }
+        $.ajax({
+            type: "POST",
+            url: "movies",
+            async: true,
+            data: dataToSend,
+            dataType: "json",
+            cache: false,
+        })
+        .done(function(response) {
+            success(response);
+            
+        })
+        .fail(function(error) {
+            console.log('error : ' + error.status);
+        }); 
+    }
+
+    putMovie = function(data, success) {
+        let dataToSend = {
+            method : 'PUT',
+            route : "movies",
+            bJSON : true, 
+            id: data.id,
             title: data.title,
             created_at: data.created_at,
             duration: data.duration

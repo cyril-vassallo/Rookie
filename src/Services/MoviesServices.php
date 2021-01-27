@@ -104,6 +104,9 @@ class MoviesServices extends Initialize	{
 													"created_at" => $payload["created_at"], 
 													"duration" => $payload["duration"]
 													));
+		if(isset($payload["id"])){
+			$this->selectMovie($payload);
+		}
 
 
 	}

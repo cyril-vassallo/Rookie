@@ -79,7 +79,6 @@ class MoviesController extends Controller {
 	 */
 	private function PostMovie(array $payload){
 		$this->moviesService->insertMovie($payload);
-		//var_dump($this->moviesService->getQueryResults());
 		$this->JSON($this->moviesService->getQueryResults(),200);
 	}
 
@@ -90,6 +89,8 @@ class MoviesController extends Controller {
 	 * @Response: 'Content-Type: application/json'
 	 */
 	private function PutMovie(array $payload){
+		$this->moviesService->updateMovie($payload);
+		$this->JSON($this->moviesService->getQueryResults(),200);
 		
 	}
 
