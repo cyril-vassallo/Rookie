@@ -3,7 +3,8 @@
  * Général scop for movies route
  */
 class Movies {
-    constructor(clear, listeners, ajaxMovies){
+    constructor(messageAlert, clear, listeners, ajaxMovies){
+        this.messageAlert = messageAlert;
         this.clear = clear;
         this.listeners = listeners;
         this.ajaxMovies = ajaxMovies;
@@ -12,14 +13,14 @@ class Movies {
     }
     
     StartScriptExecution = function(){
-        this.listeners.handleClickOnSelectButtons(this.ajaxMovies.getMovie, this.successGetMovie);
+        this.listeners.handleClickOnCancelButton();
+        this.listeners.handleClickOnEachCopyButton(this.ajaxMovies.getMovie, this.successGetMovie);
         this.listeners.handleClickOnCreateButton(this.ajaxMovies.postMovie, this.successPostMovie);
         this.listeners.handleClickOnDeleteButton(this.ajaxMovies.deleteMovie, this.successDeleteMovie);
     }
 
     successGetMovie = function(response){
         let movie = response[0];
-        console.log(movie);
         document.querySelector('#id_movie').value = movie.id;
         document.querySelector('#title_movie').value = movie.title;
         document.querySelector('#createdAt_movie').value = movie.created_at;
@@ -27,11 +28,30 @@ class Movies {
     }
 
     successPostMovie = function(response){
-        console.log(response);
+        try{
+            let movie = response[0];
+            console.log(`The movie ${movie.title} has been created`);
+            window.location = 'movies';
+            ajaxMovies.getMovies(this.data, this.successGetMovies);
+        }catch(e){
+            window.location = 'movies';
+        }
+           
     }
 
     successDeleteMovie = function(response){
-        console.log(response);
+        try{
+            let movie = response[0];
+            let message = `The movie | <em>${movie.title}</em> | has been remove from database`;
+            document.querySelector(`tr[data-id="${movie.id}"]`).remove();
+            messageAlert.display('#alertMovie', message , 'danger')
+            clear.clearMovieForm();
+        }catch(e){
+            window.location = 'movies';
+        }
+    }
+    successPutMovie = function(response){
+        clear.clearMovieForm();
     }
 }
 
@@ -42,21 +62,21 @@ class Movies {
 class Listeners {
     constructor(){}
 
-    handleClickOnSelectButtons = function(getMovie, success){
+    handleClickOnEachCopyButton = function(getMovie, success){
         let data = {};
-        let buttons = document.getElementsByClassName("selectButton");
-        for(let i = 0; i < buttons.length; i++)
+        let copyButtons = document.getElementsByClassName("copyButton");
+        for(let i = 0; i < copyButtons.length; i++)
         {
-            buttons[i].addEventListener('click', function(e){
+            copyButtons[i].addEventListener('click', function(e){
                 data.id = e.target.dataset.id; 
                 getMovie(data, success)
+             
             });
         } 
     }
 
     handleClickOnCreateButton = function(postMovie, success){
         let createButton =  document.querySelector("#btn_create");
-        console.log(createButton);
         createButton.addEventListener('click', function(){
             let data = {
                 title:  document.querySelector('#title_movie').value,
@@ -69,12 +89,18 @@ class Listeners {
 
     handleClickOnDeleteButton = function(deleteMovie, success){
         let deleteButton =  document.querySelector("#btn_delete");
-        console.log(deleteButton);
         deleteButton.addEventListener('click', function(){
             let data = {
                 id:  document.querySelector('#id_movie').value,
             };
             deleteMovie(data, success)
+        });
+    }
+
+    handleClickOnCancelButton = function(){
+        let cancelButton =  document.querySelector("#btn_cancel");
+        cancelButton.addEventListener('click', function(){
+            clear.clearMovieForm();
         });
     }
 }
@@ -94,6 +120,30 @@ class Clear {
         document.querySelector('#duration_movie').value = '';
     }
 }
+
+/***
+ * @class
+ * Message Alert
+ */
+class MessageAlert {
+
+  /**
+   * Display Message Alert
+   * @param {string} where 
+   * @param {string} message 
+   * @param {*string} alertLevel 
+   */
+    display = function(where, message, alertLevel){
+      let template = 
+      `<div class="alert alert-${alertLevel} alert-dismissible fade show" role="alert">
+        ${message}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>`;
+      document.querySelector(where).innerHTML = template;
+    }
+ }
 
 /**
  * @Class 
@@ -125,6 +175,7 @@ class AjaxMovies {
             console.log('error : ' + error.status);
         }); 
     }
+
 
     postMovie = function(data, success) {
         let dataToSend = {
@@ -176,19 +227,17 @@ class AjaxMovies {
             console.log('error : ' + error.status);
         }); 
     }
-
-
-
 }
 
+const messageAlert = new MessageAlert();
 const clear = new Clear();
 const listeners = new Listeners();
 const ajaxMovies =  new AjaxMovies(); 
 
 
-(function(clear, listeners, ajaxMovies) {
-    const movies = new Movies(clear, listeners, ajaxMovies);
-})(clear, listeners, ajaxMovies)
+(function(messageAlert, clear, listeners, ajaxMovies) {
+    const movies = new Movies(messageAlert, clear, listeners, ajaxMovies);
+})(messageAlert, clear, listeners, ajaxMovies)
 
 
 

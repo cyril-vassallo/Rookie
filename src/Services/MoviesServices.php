@@ -81,15 +81,13 @@ class MoviesServices extends Initialize	{
 	 * @return void
 	 */
 	public function deleteMovie(array $payload){
+		if(isset($payload["id"])){
+			$this->selectMovie($payload);
+		}
 		$pathSQL = $_ENV["ROOT"] . $this->PATH["PATH_SQL"] . "movies/delete_movie.sql";
 		$this->database->treatData($pathSQL , array(
 													"id" => $payload["id"]
 													));
-		$this->queryResults = array(
-									"code" => 200,
-									"id" => $payload["id"],
-									"message" => "has been removed"
-								);
 	}
 
 	/**
@@ -107,11 +105,7 @@ class MoviesServices extends Initialize	{
 													"duration" => $payload["duration"]
 													));
 
-		$this->queryResults = array(
-									"code" => 200,
-									"id" => $payload["id"],
-									"message" => "has been updated"
-								);
+
 	}
 }
 

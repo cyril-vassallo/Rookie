@@ -17,6 +17,8 @@
                     <h1 style="color:cadetblue;text-align:center">List of movies</h1>
                 </div>
             </div>
+            <div class="row mb-5 mt-5 justify-content-center" id="alertMovie">
+            </div>
         </div>
         <div class="container mb-5">
             <table class="display table table-hover" style="width:100%" id="movieTable">
@@ -29,16 +31,21 @@
                         <th>ACTION</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tbodyMovies">
                     {% for movie in movies %}
-                    <tr>
+                    <tr data-id='{{movie.id}}'>
                         <td>{{movie.id}}</td>
                         <td>{{movie.title}}</td>
                         <td>{{movie.createdAt|date('yy/m/d',false) }}</td>
                         <td>{{movie.duration}}</td>
                         <td>
-                            <button data-id="{{movie.id}}" type="button" class="btn btn-primary selectButton">
-                                Select
+                            <button type="button" data-id="{{movie.id}}" class="btn btn-primary copyButton">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+                                    <path d="M16 8v-2a2 2 0 0 0 -2 -2h-8a2 2 0 0 0 -2 2v8a2 2 0 0 0 2 2h2"></path>
+                                 </svg>
+                                 Copy
                             </button>
                         </td>
                     </tr>
@@ -64,10 +71,39 @@
                 <input placeholder="empty" class="form-control" type="text" name="duration_movie" id="duration_movie" />
             </div>
             <div class="row justify-content-center my-5">
-                <button type="button" name='create' class="btn btn-success mx-2" id="btn_create">CREATE</button>
-                <button type="button" name="update" class="btn btn-primary mx-2" id="btn_update">UPDATE</button>
-                <button type="button" name="delete" class="btn btn-danger mx-2" id="btn_delete">DELETE</button>
-                <button type="button" name="cancel" class="btn btn-info mx-2" id="btn_cancel" onclick="clearFields()">CANCEL</button>
+                <button type="button" name='create' class="btn btn-success mx-2" id="btn_create">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <line x1="9" y1="12" x2="15" y2="12"></line>
+                        <line x1="12" y1="9" x2="12" y2="15"></line>
+                     </svg>
+                    CREATE</button>
+                <button type="button" name="update" class="btn btn-info mx-2" id="btn_update">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M12 15l8.385 -8.415a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3z"></path>
+                        <path d="M16 5l3 3"></path>
+                        <path d="M9 7.07a7.002 7.002 0 0 0 1 13.93a7.002 7.002 0 0 0 6.929 -5.999"></path>
+                     </svg>
+                    UPDATE
+                </button>
+                <button type="button" name="cancel" class="btn btn-primary mx-2" id="btn_cancel">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <path d="M10 10l4 4m0 -4l-4 4"></path>
+                     </svg>
+                    CANCEL
+                </button>
+                <button type="button" name="delete" class="btn btn-danger mx-2" id="btn_delete">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-minus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <line x1="9" y1="12" x2="15" y2="12"></line>
+                     </svg>
+                    DELETE
+                </button>
             </div>
         </form>
     </section>
