@@ -4,8 +4,8 @@ namespace Rookie\Legacy;
 use Rookie\TemplateEngine\View;
 use Rookie\HttpComponents\Request;
 
-require_once $PATH["PATH_ROOT"] . $PATH["PATH_HTTP"]. "Request.php";
-require_once $PATH["PATH_ROOT"] . $PATH["PATH_ENGINE"] . "View.php";
+require_once $_ENV["ROOT"] . $PATH["PATH_HTTP"]. "Request.php";
+require_once $_ENV["ROOT"] . $PATH["PATH_ENGINE"] . "View.php";
 
 class Controller {
 

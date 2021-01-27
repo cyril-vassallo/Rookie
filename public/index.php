@@ -13,11 +13,11 @@ $dotenv->load();
 
 //Start the session
 session_start();
-$_SESSION['JSON'] = false;
+//$_SESSION['JSON'] = false;
 
 $PATH = Configuration::getPaths();
 
-require $PATH['PATH_ROOT'].$PATH["PATH_KERNEL"].'Router.php';
+require $_ENV['ROOT'].$PATH["PATH_KERNEL"].'Router.php';
 $router = new Router($PATH);
 
 // require and instantiate the requested controller

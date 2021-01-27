@@ -4,7 +4,7 @@ namespace Rookie\DataComponent;
 use Rookie\Kernel\Configuration;
 use Rookie\DataComponents\Database;
 
-require_once $PATH["PATH_ROOT"] . $PATH["PATH_DB"]."Database.php";
+require_once $_ENV["ROOT"] . $PATH["PATH_DB"]."Database.php";
 
 
 Class Initialize	{

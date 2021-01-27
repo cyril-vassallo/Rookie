@@ -41,7 +41,7 @@ class Request {
 
 	private function isRouteParamExist(){
 		if ((!isset($this->payload["route"])) || $this->payload["route"] == '')	{
-			$routesIniFile = $this->PATH["PATH_ROOT"] . $this->PATH["PATH_CONF"] . 'routes.ini';
+			$routesIniFile = $_ENV["ROOT"] . $this->PATH["PATH_CONF"] . 'routes.ini';
 			if(is_file($routesIniFile))	{
 				$parsedRoutesFile = parse_ini_file($routesIniFile, false);
 				$this->payload["route"] = $parsedRoutesFile['DEFAULT_ROUTE'];

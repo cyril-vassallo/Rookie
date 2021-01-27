@@ -8,11 +8,11 @@ Rookie is a PHP from scratch very lightweight framework for rookie developers (2
 - HTTP server responses Content-type:application/json or text/html
 
 
-Rookie-welcome.png
-
 ## Public project
 - Author : Cyril VASSALLO
 - Project: 2021
+
+![Rookie](/public/assets/images/Rookie-demo.png "Rookie")
 
 # What is Rookie ? 
 
