@@ -72,7 +72,12 @@ Rookie-Project // Your root clone folder
 		- images
 			- Rookie.jpg
 		- svg
+			- icon-tabler-circle-minus.svg 
+			- icon-tabler-circle-plus.svg
+			- icon-tabler-circle-x.svg
+			- icon-tabler-edit.svg
 			- logo.svg
+			- tabler-icon-copy.svg
 	- css
 		- library
 			- bootstrap
@@ -96,10 +101,11 @@ Rookie-Project // Your root clone folder
 			- jquery
 				- jquery.min.js
 		- src
-			- footer.css
-			- global.css
-			- home.css
-			- movie.css
+			- pages
+				- Movies.js
+				- Actors.js
+			- shared
+				- Common.js
 	- index.php // entry point
 - src
 	- Controllers
@@ -119,9 +125,12 @@ Rookie-Project // Your root clone folder
 		- home
 			- home.html.twig
 		- movies
+			- table.html.twig
+			- form.html.twig
+			- header.html.twig
 			- movies.html.twig
 		- actors
-		- partials
+		- shared
 			footer.html.twig
 			navbar.html.twig
 		- base.html.twig
