@@ -1,0 +1,38 @@
+
+<form method="POST" action="confirm" class="container">
+    <div class="form-group">
+        <label for="id_movie">Id</label>
+        <input placeholder="empty" class="form-control" type="text" name="id_movie" id="id_movie" disabled />
+    </div>
+    <div class="form-group">
+        <label for="title_movie">Title</label>
+        <input placeholder="empty" class="form-control" type="text" name="title_movie" id="title_movie" />
+    </div>
+    <div class="form-group">
+        <label for="createdAt_movie">CreatedAt</label>
+        <input placeholder="empty" class="form-control" type="text" name="createdAt_movie" id="createdAt_movie" />
+    </div>
+    <div class="form-group">
+        <label for="duration_movie">Duration</label>
+        <input placeholder="empty" class="form-control" type="text" name="duration_movie" id="duration_movie" />
+    </div>
+    <div class="row justify-content-center my-5">
+        <button type="button" name='create' class="btn btn-success mx-2" id="btn_create">
+            <img src="public/assets/svg/icon-tabler-circle-plus.svg" alt="create button"/>
+            CREATE
+        </button>
+        <button type="button" name="update" class="btn btn-info mx-2" id="btn_update">
+            <img src="public/assets/svg/icon-tabler-edit.svg" alt="update button"/>
+            UPDATE
+        </button>
+        <button type="button" name="cancel" class="btn btn-primary mx-2" id="btn_cancel">
+            <img src="public/assets/svg/icon-tabler-circle-x.svg" alt="cancel button"/>
+            CANCEL
+        </button>
+        <button type="button" name="delete" class="btn btn-danger mx-2" id="btn_delete">
+            <img src="public/assets/svg/icon-tabler-circle-minus.svg" alt="delete button"/>
+            DELETE
+        </button>
+    </div>
+</form>
+  

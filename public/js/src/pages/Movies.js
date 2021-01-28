@@ -1,14 +1,24 @@
 /**
+ * ----------------------------------
+ *              MOVIES
+ * ----------------------------------
+ * @author Cyril VASSALLO
+ * In this file you will find:
+ * - stored classes for movies page
+ * - instances of object in the Immediately-invoked Function of movies page
+ * /
+
+/**
  * @Class 
- * Général scop for the movies route
+ * General class for the movies page
  */
 class Movies {
-    constructor(templates, messageAlert, clear, listeners, ajaxMovies) {
+    constructor(templates, messageAlert, clear, listeners, ajax) {
         this.templates = templates;
         this.messageAlert = messageAlert;
         this.clear = clear;
         this.listeners = listeners;
-        this.ajaxMovies = ajaxMovies;
+        this.ajax = ajax;
         this.data = {};
         this.StartScriptExecution()
     }
@@ -18,10 +28,10 @@ class Movies {
      */
     StartScriptExecution = function () {
         this.listeners.handleClickOnCancelButton();
-        this.listeners.handleClickOnEachCopyButton(this.ajaxMovies.getMovie, this.successGetMovie);
-        this.listeners.handleClickOnCreateButton(this.ajaxMovies.postMovie, this.successPostMovie);
-        this.listeners.handleClickOnDeleteButton(this.ajaxMovies.deleteMovie, this.successDeleteMovie);
-        this.listeners.handleClickOnUpdateButton(this.ajaxMovies.putMovie, this.successPutMovie);
+        this.listeners.handleClickOnEachCopyButton(this.ajax.getMovie, this.successGetMovie);
+        this.listeners.handleClickOnCreateButton(this.ajax.postMovie, this.successPostMovie);
+        this.listeners.handleClickOnDeleteButton(this.ajax.deleteMovie, this.successDeleteMovie);
+        this.listeners.handleClickOnUpdateButton(this.ajax.putMovie, this.successPutMovie);
     }
 
     /**
@@ -46,7 +56,7 @@ class Movies {
             let message = `The movie | <em>${movie.title}</em> | has been created in database`;
             messageAlert.display('#alertMovie', message, 'success');
             document.querySelector('#tbodyMovies').innerHTML += templates.movieRow(movie);
-            this.listeners.handleClickOnEachCopyButton(this.ajaxMovies.getMovie, this.successGetMovie);
+            this.listeners.handleClickOnEachCopyButton(this.ajax.getMovie, this.successGetMovie);
         } catch (e) {
             console.log(e);
         }
@@ -80,7 +90,7 @@ class Movies {
             messageAlert.display('#alertMovie', message, 'info');
             document.querySelector(`tr[data-id="${movie.id}"]`).remove();
             document.querySelector('#tbodyMovies').innerHTML += templates.movieRow(movie);
-            this.listeners.handleClickOnEachCopyButton(this.ajaxMovies.getMovie, this.successGetMovie);
+            this.listeners.handleClickOnEachCopyButton(this.ajax.getMovie, this.successGetMovie);
         } catch (e) {
             console.log(e);
         }
@@ -89,9 +99,9 @@ class Movies {
 
 /**
  * @Class 
- * Add event to DOM elements
+ * Add event to DOM elements for movies page
  */
-class Listeners {
+class MoviesListeners {
     constructor() { }
 
     /**
@@ -171,90 +181,11 @@ class Listeners {
     }
 }
 
-
 /**
  * @Class 
- * Clear field methods
+ * Ajax methods for movies page
  */
-class Clear {
-    constructor() { }
-
-    /**
-     * clear all movie form input fields
-     */
-    clearMovieForm = function () {
-        document.querySelector('#id_movie').value = '';
-        document.querySelector('#title_movie').value = '';
-        document.querySelector('#createdAt_movie').value = '';
-        document.querySelector('#duration_movie').value = '';
-    }
-}
-
-/**
- * @Class 
- * Give templates methods
- */
-class Templates {
-    constructor() { }
-
-    /**
-     * Provide a dynamic template string of one row of movie table
-     * @param {object} movie
-     * @return {string}
-     */
-    movieRow = function(movie) {
-        return `         
-            <tr data-id='${movie.id}'>
-                <td>${movie.id}</td>
-                <td>${movie.title}</td>
-                <td>${movie.create_at}</td>
-                <td>${movie.duration}</td>
-                <td>
-                    <button type="button" data-id="${movie.id}" class="btn btn-primary copyButton">
-                        Select
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <rect x="8" y="8" width="12" height="12" rx="2"></rect>
-                            <path d="M16 8v-2a2 2 0 0 0 -2 -2h-8a2 2 0 0 0 -2 2v8a2 2 0 0 0 2 2h2"></path>
-                        </svg>
-                    </button>
-                </td>
-            </tr>`;
-    }
-
-}
-
-/***
- * @class
- * Message Alert
- */
-class MessageAlert {
-
-    /**
-     * Display Message Alert into a specific node 
-     * @param {string} where 
-     * @param {string} message 
-     * @param {*string} alertLevel 
-     */
-    display = function (where, message, alertLevel) {
-        let template =
-            `<div class="alert alert-${alertLevel} alert-dismissible fade show" role="alert">
-        ${message}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>`;
-        document.querySelector(where).innerHTML = template;
-    }
-}
-
-
-
-/**
- * @Class 
- * Ajax methods for movie routes
- */
-class AjaxMovies {
+class MoviesAjax {
     constructor() { }
 
     /**
@@ -382,29 +313,23 @@ class AjaxMovies {
 }
 
 /**
- * General scop instance of object
- */
-const templates = new Templates();
-const messageAlert = new MessageAlert();
-const clear = new Clear();
-const listeners = new Listeners();
-const ajaxMovies = new AjaxMovies();
-
-
-/**
  * IIF (Immediately-invoked Function)
  * This the function scop where all the script will execute
- * It prevent of collision with other script
+ * It prevent of collision with other script 
+ * listeners and ajax are object inside the scop of movies
+ * templates, messageAlert and clear are object in the global scop from common.js file
  */
-(function (templates, messageAlert, clear, listeners, ajaxMovies) {
-    const movies = new Movies(
+(function (templates, messageAlert, clear) {
+    const listeners = new MoviesListeners();
+    const ajax = new MoviesAjax();
+    new Movies(
         templates,
         messageAlert, 
         clear, 
         listeners, 
-        ajaxMovies
+        ajax
     );
-})(templates, messageAlert, clear, listeners, ajaxMovies)
+})(templates, messageAlert, clear)
 
 
 

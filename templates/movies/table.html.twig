@@ -1,0 +1,29 @@
+<div class="container mb-5">
+    <table class="display table table-hover" style="width:100%" id="movieTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>TITLE</th>
+                <th>DATE</th>
+                <th>DURATION</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="tbodyMovies">
+            {% for movie in movies %}
+            <tr data-id='{{movie.id}}'>
+                <td>{{movie.id}}</td>
+                <td>{{movie.title}}</td>
+                <td>{{movie.createdAt|date('yy/m/d',false) }}</td>
+                <td>{{movie.duration}}</td>
+                <td>
+                    <button type="button" data-id="{{movie.id}}" class="btn btn-primary btn_select">
+                        Select
+                        <img src="public/assets/svg/tabler-icon-copy.svg" alt="select button"/>
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

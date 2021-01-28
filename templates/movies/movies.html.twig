@@ -9,112 +9,16 @@
 {% endblock %}
 
 {% block body %}
-<div class="section">
-    <section>
-        <div class="container">
-            <div class="row mb-5 mt-5 justify-content-center">
-                <div class="col-5">
-                    <h1 style="color:cadetblue;text-align:center">List of movies</h1>
-                </div>
-            </div>
-            <div class="row mb-5 mt-5 justify-content-center" id="alertMovie">
-            </div>
-        </div>
-        <div class="container mb-5">
-            <table class="display table table-hover" style="width:100%" id="movieTable">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>TITLE</th>
-                        <th>DATE</th>
-                        <th>DURATION</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody id="tbodyMovies">
-                    {% for movie in movies %}
-                    <tr data-id='{{movie.id}}'>
-                        <td>{{movie.id}}</td>
-                        <td>{{movie.title}}</td>
-                        <td>{{movie.createdAt|date('yy/m/d',false) }}</td>
-                        <td>{{movie.duration}}</td>
-                        <td>
-                            <button type="button" data-id="{{movie.id}}" class="btn btn-primary btn_select">
-                                Select
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <rect x="8" y="8" width="12" height="12" rx="2"></rect>
-                                    <path d="M16 8v-2a2 2 0 0 0 -2 -2h-8a2 2 0 0 0 -2 2v8a2 2 0 0 0 2 2h2"></path>
-                                 </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <form method="POST" action="confirm" class="container">
-            <div class="form-group">
-                <label for="id_movie">Id</label>
-                <input placeholder="empty" class="form-control" type="text" name="id_movie" id="id_movie" disabled />
-            </div>
-            <div class="form-group">
-                <label for="title_movie">Title</label>
-                <input placeholder="empty" class="form-control" type="text" name="title_movie" id="title_movie" />
-            </div>
-            <div class="form-group">
-                <label for="createdAt_movie">CreatedAt</label>
-                <input placeholder="empty" class="form-control" type="text" name="createdAt_movie" id="createdAt_movie" />
-            </div>
-            <div class="form-group">
-                <label for="duration_movie">Duration</label>
-                <input placeholder="empty" class="form-control" type="text" name="duration_movie" id="duration_movie" />
-            </div>
-            <div class="row justify-content-center my-5">
-                <button type="button" name='create' class="btn btn-success mx-2" id="btn_create">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <circle cx="12" cy="12" r="9"></circle>
-                        <line x1="9" y1="12" x2="15" y2="12"></line>
-                        <line x1="12" y1="9" x2="12" y2="15"></line>
-                     </svg>
-                    CREATE</button>
-                <button type="button" name="update" class="btn btn-info mx-2" id="btn_update">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M12 15l8.385 -8.415a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3z"></path>
-                        <path d="M16 5l3 3"></path>
-                        <path d="M9 7.07a7.002 7.002 0 0 0 1 13.93a7.002 7.002 0 0 0 6.929 -5.999"></path>
-                     </svg>
-                    UPDATE
-                </button>
-                <button type="button" name="cancel" class="btn btn-primary mx-2" id="btn_cancel">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <circle cx="12" cy="12" r="9"></circle>
-                        <path d="M10 10l4 4m0 -4l-4 4"></path>
-                     </svg>
-                    CANCEL
-                </button>
-                <button type="button" name="delete" class="btn btn-danger mx-2" id="btn_delete">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-minus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <circle cx="12" cy="12" r="9"></circle>
-                        <line x1="9" y1="12" x2="15" y2="12"></line>
-                     </svg>
-                    DELETE
-                </button>
-            </div>
-        </form>
+    <section class="section">
+        {% include 'movies/header.html.twig'%}
+        {% include 'movies/table.html.twig'%}
+        {% include 'movies/form.html.twig'%}
     </section>
-</div>
 {% endblock %}
 
 {% block javascript %}
     <script type="text/javascript" src="public/js/library/dataTables/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="public/js/library/dataTables/dataTables.bootstrap4.min.js"></script>
     <script type="text/javascript" src="public/js/library/dataTables/dataTables.min.js"></script>
-    <script type="text/javascript" src="public/js/src/utils.js"></script>
-    <script type="text/javascript" src="public/js/src/movies.js"></script>
-    <script type="text/javascript" src="public/js/src/movies_ajax.js"></script>
+    <script type="text/javascript" src="public/js/src/pages/Movies.js"></script>
 {% endblock %}
