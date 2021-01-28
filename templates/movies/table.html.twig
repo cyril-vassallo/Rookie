@@ -2,17 +2,17 @@
     <table class="display table table-hover" style="width:100%" id="movieTable">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>TITLE</th>
-                <th>DATE</th>
-                <th>DURATION</th>
+                <th hidden>ID</th>
+                <th>MOVIE TITLE</th>
+                <th>REGISTRATION</th>
+                <th>DURATION TIME</th>
                 <th></th>
             </tr>
         </thead>
         <tbody id="tbodyMovies">
             {% for movie in movies %}
             <tr data-id='{{movie.id}}'>
-                <td>{{movie.id}}</td>
+                <td hidden>{{movie.id}}</td>
                 <td>{{movie.title}}</td>
                 <td>{{movie.created_at| date('d/m/Y') }}</td>
                 <td>{{movie.duration}}</td>

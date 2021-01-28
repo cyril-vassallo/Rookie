@@ -50,7 +50,7 @@ class Templates {
 
         return `         
             <tr data-id='${movie.id}'>
-                <td>${movie.id}</td>
+                <td hidden>${movie.id}</td>
                 <td>${movie.title}</td>
                 <td>${movie.created_at.toLocaleString('fr-FR', { format : 'd/m/y' })}</td>
                 <td>${movie.duration}</td>

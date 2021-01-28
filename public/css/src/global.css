@@ -6,6 +6,9 @@ body{
     background-size: cover;
 }
     
+label{
+    text-shadow: 2px -2px 2px black;
+}
 
 
 /* VARIABLE CSS-GENERAL */
