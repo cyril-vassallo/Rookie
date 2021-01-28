@@ -1,1 +1,1 @@
-delete from movie where id=@id
+delete from movie where id= :id

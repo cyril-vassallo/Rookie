@@ -37,7 +37,7 @@ class MoviesServices extends Initialize	{
 	 */
 	public function selectMovies(array $payload)	{
 		$pathSQL = $_ENV["ROOT"] . $this->PATH["PATH_SQL"] . "movies/select_movies.sql";
-		$this->queryResults = $this->database->getSelectData($pathSQL , array());
+		$this->queryResults = $this->database->search($pathSQL , array());
 	}
 
 	/**
@@ -48,7 +48,7 @@ class MoviesServices extends Initialize	{
 	 */
 	public function selectMovie(array $payload){
 		$pathSQL = $_ENV["ROOT"] . $this->PATH["PATH_SQL"] . "movies/select_movie.sql";
-		$this->queryResults = $this->database->getSelectData($pathSQL , array( "id" => $payload["id"] ));
+		$this->queryResults = $this->database->search($pathSQL , array( "id" => $payload["id"] ));
 		
 	}
 
@@ -61,12 +61,12 @@ class MoviesServices extends Initialize	{
 	public function insertMovie(array $payload)	{
 
 		$pathSQL = $_ENV["ROOT"] . $this->PATH["PATH_SQL"] . "movies/insert_movie.sql";
-		$this->database->treatData($pathSQL , array(
+		$this->database->mutate($pathSQL , array(
 													"title" => $payload["title"], 
 													"created_at" => $payload["created_at"], 
 													"duration" => $payload["duration"]
 													));
-		$id = $this->database->getLastInsertId();
+		$id = $this->database->findLastInsertId();
 		if($id){
 			$payload = ['id' => $id];
 			$this->selectMovie($payload);
@@ -85,7 +85,7 @@ class MoviesServices extends Initialize	{
 			$this->selectMovie($payload);
 		}
 		$pathSQL = $_ENV["ROOT"] . $this->PATH["PATH_SQL"] . "movies/delete_movie.sql";
-		$this->database->treatData($pathSQL , array(
+		$this->database->mutate($pathSQL , array(
 													"id" => $payload["id"]
 													));
 	}
@@ -98,7 +98,7 @@ class MoviesServices extends Initialize	{
 	 */
 	public function updateMovie(array $payload){
 		$pathSQL = $_ENV["ROOT"] . $this->PATH["PATH_SQL"] . "movies/update_movie.sql";
-		$this->database->treatData($pathSQL , array(
+		$this->database->mutate($pathSQL , array(
 													"id" => $payload["id"], 
 													"title" => $payload["title"], 
 													"created_at" => $payload["created_at"], 

@@ -14,7 +14,7 @@
             <tr data-id='{{movie.id}}'>
                 <td>{{movie.id}}</td>
                 <td>{{movie.title}}</td>
-                <td>{{movie.createdAt|date('yy/m/d',false) }}</td>
+                <td>{{movie.created_at| date('d/m/Y') }}</td>
                 <td>{{movie.duration}}</td>
                 <td>
                     <button type="button" data-id="{{movie.id}}" class="btn btn-primary btn_select">

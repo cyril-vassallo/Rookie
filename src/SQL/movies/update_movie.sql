@@ -1,1 +1,1 @@
-update movie set title="@title", created_at="@created_at", duration=@duration where id=@id
+update movie set title= :title , created_at= :created_at, duration=:duration where id=:id

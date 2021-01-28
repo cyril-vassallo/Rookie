@@ -45,11 +45,14 @@ class Templates {
      * @return {string}
      */
     movieRow = function (movie) {
+        const timeZone = 'Europe/Kaliningrad';
+        const timeZoneOffset = '+02:00';  
+
         return `         
             <tr data-id='${movie.id}'>
                 <td>${movie.id}</td>
                 <td>${movie.title}</td>
-                <td>${movie.create_at}</td>
+                <td>${movie.created_at.toLocaleString('fr-FR', { format : 'd/m/y' })}</td>
                 <td>${movie.duration}</td>
                 <td>
                     <button type="button" data-id="${movie.id}" class="btn btn-primary copyButton">

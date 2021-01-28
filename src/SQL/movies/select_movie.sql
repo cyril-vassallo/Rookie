@@ -1,1 +1,1 @@
-select id, title, created_at, duration from movie where id=@id
+select id, title, created_at, duration from movie where id=:id
