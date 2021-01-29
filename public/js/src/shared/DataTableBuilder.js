@@ -18,7 +18,7 @@ class DataTableBuilder {
         this.dataTableInit(tableId, category, order);
   
       } else if (page === "actors") {
-        //to do actors page dataTable configuration
+        //to do actors page dataTable Loader
       }
     }
   

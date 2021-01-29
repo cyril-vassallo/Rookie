@@ -3,7 +3,7 @@ namespace App\Services;
 
 use Rookie\DataComponent\Initialize;
 
-require_once $_ENV["ROOT"] . $PATH["PATH_DB"]."Initialize.php";
+require_once $_ENV["ROOT"] . $PATH["DB"]."Initialize.php";
 
 /**
  * @Service
@@ -36,7 +36,7 @@ class MoviesServices extends Initialize	{
 	 * @return void
 	 */
 	public function selectMovies(array $payload)	{
-		$pathSQL = $_ENV["ROOT"] . $this->PATH["PATH_SQL"] . "movies/select_movies.sql";
+		$pathSQL = $_ENV["ROOT"] . $this->PATH["SQL"] . "movies/select_movies.sql";
 		$this->queryResults = $this->database->search($pathSQL , array());
 	}
 
@@ -47,7 +47,7 @@ class MoviesServices extends Initialize	{
 	 * @return void
 	 */
 	public function selectMovie(array $payload){
-		$pathSQL = $_ENV["ROOT"] . $this->PATH["PATH_SQL"] . "movies/select_movie.sql";
+		$pathSQL = $_ENV["ROOT"] . $this->PATH["SQL"] . "movies/select_movie.sql";
 		$this->queryResults = $this->database->search($pathSQL , array( "id" => $payload["id"] ));
 		
 	}
@@ -60,7 +60,7 @@ class MoviesServices extends Initialize	{
 	 */
 	public function insertMovie(array $payload)	{
 
-		$pathSQL = $_ENV["ROOT"] . $this->PATH["PATH_SQL"] . "movies/insert_movie.sql";
+		$pathSQL = $_ENV["ROOT"] . $this->PATH["SQL"] . "movies/insert_movie.sql";
 		$this->database->mutate($pathSQL , array(
 													"title" => $payload["title"], 
 													"created_at" => $payload["created_at"], 
@@ -84,7 +84,7 @@ class MoviesServices extends Initialize	{
 		if(isset($payload["id"])){
 			$this->selectMovie($payload);
 		}
-		$pathSQL = $_ENV["ROOT"] . $this->PATH["PATH_SQL"] . "movies/delete_movie.sql";
+		$pathSQL = $_ENV["ROOT"] . $this->PATH["SQL"] . "movies/delete_movie.sql";
 		$this->database->mutate($pathSQL , array(
 													"id" => $payload["id"]
 													));
@@ -97,7 +97,7 @@ class MoviesServices extends Initialize	{
 	 * @return void
 	 */
 	public function updateMovie(array $payload){
-		$pathSQL = $_ENV["ROOT"] . $this->PATH["PATH_SQL"] . "movies/update_movie.sql";
+		$pathSQL = $_ENV["ROOT"] . $this->PATH["SQL"] . "movies/update_movie.sql";
 		$this->database->mutate($pathSQL , array(
 													"id" => $payload["id"], 
 													"title" => $payload["title"], 

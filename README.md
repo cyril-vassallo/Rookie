@@ -63,7 +63,7 @@ Rookie-Project // Your root clone folder
 	- HttpComponents
 		- Request.php
 	- Kernel
-		- Configuration.php
+		- Loader.php
 		- Router.php
 	- Legacy
 	- TemplateEngine

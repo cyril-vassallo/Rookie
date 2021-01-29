@@ -36,7 +36,7 @@ class Router
 	 * @return [string] 
 	 */
 	public function getControllerPath(){
-		return $_ENV["ROOT"] . $this->PATH["PATH_CONTROLLER"] . $this->controller . ".php";
+		return $_ENV["ROOT"] . $this->PATH["CONTROLLER"] . $this->controller . ".php";
 	}
 
 
@@ -55,7 +55,7 @@ class Router
 	 * @return void
 	 */
 	private function parseRoutesFile(){
-		$routesIniFile = $_ENV["ROOT"] . $this->PATH["PATH_CONF"] . 'routes.ini';
+		$routesIniFile = $_ENV["ROOT"] . $this->PATH["CONF"] . 'routes.ini';
 		if(is_file($routesIniFile))	{
 			$parsedRoutesFile = parse_ini_file($routesIniFile, false);
 			$this->routes = $parsedRoutesFile['ROUTE'];
@@ -105,7 +105,7 @@ class Router
 	private function isControllerExist()
 	{
 		$this->controller = ucfirst($this->currentRoute.'Controller');
-		if (!(file_exists($_ENV["ROOT"] . $this->PATH["PATH_CONTROLLER"] . $this->controller . ".php"))) {
+		if (!(file_exists($_ENV["ROOT"] . $this->PATH["CONTROLLER"] . $this->controller . ".php"))) {
 			$this->controller = ucfirst($this->defaultRoute .'Controller');
 		}
 	}

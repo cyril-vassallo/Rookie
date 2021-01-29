@@ -123,7 +123,6 @@ class MoviesListeners {
         let selectButtons = document.getElementsByClassName("btn_select");
         for (let i = 0; i < selectButtons.length; i++) {
             selectButtons[i].addEventListener('click', async function (e) {
-                console.log(e.target);
                 if(currentClickedButton !== beforeClickedButton){
                     beforeClickedButton = currentClickedButton;
                 }

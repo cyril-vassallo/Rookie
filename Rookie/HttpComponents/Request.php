@@ -1,7 +1,7 @@
 <?php
 namespace Rookie\HttpComponents;
 
-use Rookie\Kernel\Configuration;
+use Rookie\Kernel\Loader;
 /**
  * Filter and secure variables from http requests 
  * Variables can be used in all layers with th request Object  
@@ -15,7 +15,7 @@ class Request {
 	public $payload;
 	
 	function __construct()	{
-		$this->PATH = Configuration::getPaths();
+		$this->PATH = Loader::getPATHS();
 		$this->query= [];
 		$this->payload = [];
 		$this->bJSON = true;
@@ -41,7 +41,7 @@ class Request {
 
 	private function isRouteParamExist(){
 		if ((!isset($this->payload["route"])) || $this->payload["route"] == '')	{
-			$routesIniFile = $_ENV["ROOT"] . $this->PATH["PATH_CONF"] . 'routes.ini';
+			$routesIniFile = $_ENV["ROOT"] . $this->PATH["CONF"] . 'routes.ini';
 			if(is_file($routesIniFile))	{
 				$parsedRoutesFile = parse_ini_file($routesIniFile, false);
 				$this->payload["route"] = $parsedRoutesFile['DEFAULT_ROUTE'];

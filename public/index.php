@@ -1,9 +1,9 @@
 <?php
 
 use Rookie\Kernel\Router;
-use Rookie\Kernel\Configuration;
+use Rookie\Kernel\Loader;
 
-require_once "./../Rookie/Kernel/Configuration.php";
+require_once "./../Rookie/Kernel/Loader.php";
 require_once "./../vendor/autoload.php";
 
 
@@ -15,8 +15,8 @@ $_ENV['ROOT'] = __DIR__.'/../';
 //Start the session
 session_start();
 
-$PATH = Configuration::getPaths();
-require $_ENV['ROOT'].$PATH["PATH_KERNEL"].'Router.php';
+$PATH = Loader::getPATHS();
+require $_ENV['ROOT'].$PATH["KERNEL"].'Router.php';
 $router = new Router($PATH);
 
 // require and instantiate the requested controller

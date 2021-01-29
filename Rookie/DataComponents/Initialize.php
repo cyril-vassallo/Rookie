@@ -1,10 +1,10 @@
 <?php
 namespace Rookie\DataComponent;
 
-use Rookie\Kernel\Configuration;
+use Rookie\Kernel\Loader;
 use Rookie\DataComponents\Database;
 
-require_once $_ENV["ROOT"] . $PATH["PATH_DB"]."Database.php";
+require_once $_ENV["ROOT"] . $PATH["DB"]."Database.php";
 
 
 Class Initialize	{
@@ -41,7 +41,7 @@ Class Initialize	{
 	 * Create a database connection and init services variables and Constant
 	 */
 	public function __construct()	{
-		$this->PATH = Configuration::getPaths();
+		$this->PATH = Loader::getPATHS();
 		$this->database = new Database();
 		$this->queryResults = [];						   
 	}
