@@ -10,13 +10,12 @@ require_once "./../vendor/autoload.php";
 //Find and load .env constants
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/../');
 $dotenv->load();
+$_ENV['ROOT'] = __DIR__.'/../';
 
 //Start the session
 session_start();
-//$_SESSION['JSON'] = false;
 
 $PATH = Configuration::getPaths();
-
 require $_ENV['ROOT'].$PATH["PATH_KERNEL"].'Router.php';
 $router = new Router($PATH);
 

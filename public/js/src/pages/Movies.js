@@ -13,8 +13,9 @@
  * General class for the movies page
  */
 class Movies {
-    constructor(templates, messageAlert, clear, listeners, ajax) {
+    constructor(templates, messageAlert, clear, dataTable, listeners, ajax) {
         this.templates = templates;
+        this.dataTable = dataTable;
         this.messageAlert = messageAlert;
         this.clear = clear;
         this.listeners = listeners;
@@ -27,6 +28,7 @@ class Movies {
      * Add initial events 
      */
     StartScriptExecution = function () {
+        this.dataTable.build('movies');
         this.listeners.handleClickOnCancelButton();
         this.listeners.handleClickOnEachCopyButton(this.ajax.getMovie, this.successGetMovie);
         this.listeners.handleClickOnCreateButton(this.ajax.postMovie, this.successPostMovie);
@@ -57,8 +59,10 @@ class Movies {
             messageAlert.display('#alertMovie', message, 'success');
             document.querySelector('#tbodyMovies').innerHTML += templates.movieRow(movie);
             this.listeners.handleClickOnEachCopyButton(this.ajax.getMovie, this.successGetMovie);
+            clear.clearMovieForm();
         } catch (e) {
             console.log(e);
+            window.location = 'movies';
         }
 
     }
@@ -76,6 +80,7 @@ class Movies {
             clear.clearMovieForm();
         } catch (e) {
             console.log(e);
+            window.location = 'movies';
         }
     }
 
@@ -91,8 +96,10 @@ class Movies {
             document.querySelector(`tr[data-id="${movie.id}"]`).remove();
             document.querySelector('#tbodyMovies').innerHTML += templates.movieRow(movie);
             this.listeners.handleClickOnEachCopyButton(this.ajax.getMovie, this.successGetMovie);
+            clear.clearMovieForm();
         } catch (e) {
             console.log(e);
+            window.location = 'movies';
         }
     }
 }
@@ -111,11 +118,24 @@ class MoviesListeners {
      */
     handleClickOnEachCopyButton = function (getMovie, success) {
         let data = {};
+        let currentClickedButton = null;
+        let beforeClickedButton = null;
         let selectButtons = document.getElementsByClassName("btn_select");
         for (let i = 0; i < selectButtons.length; i++) {
-            selectButtons[i].addEventListener('click', function (e) {
-                data.id = e.target.dataset.id;
-                getMovie(data, success)
+            selectButtons[i].addEventListener('click', async function (e) {
+                console.log(e.target);
+                if(currentClickedButton !== beforeClickedButton){
+                    beforeClickedButton = currentClickedButton;
+                }
+                currentClickedButton = e.target;
+                data.id = currentClickedButton.dataset.id;
+                currentClickedButton.classList.remove("btn-primary");
+                currentClickedButton.classList.add("btn-info");
+                if(beforeClickedButton !== null){
+                    beforeClickedButton.classList.remove("btn-info");
+                    beforeClickedButton.classList.add("btn-primary");
+                }
+                await getMovie(data, success)
             });
         }
     }
@@ -127,13 +147,13 @@ class MoviesListeners {
      */
     handleClickOnCreateButton = function (postMovie, success) {
         let createButton = document.querySelector("#btn_create");
-        createButton.addEventListener('click', function () {
+        createButton.addEventListener('click', async function () {
             let data = {
                 title: document.querySelector('#title_movie').value,
                 created_at: document.querySelector('#createdAt_movie').value,
                 duration: document.querySelector('#duration_movie').value,
             };
-            postMovie(data, success)
+            await postMovie(data, success)
         });
     }
 
@@ -144,11 +164,11 @@ class MoviesListeners {
      */
     handleClickOnDeleteButton = function (deleteMovie, success) {
         let deleteButton = document.querySelector("#btn_delete");
-        deleteButton.addEventListener('click', function () {
+        deleteButton.addEventListener('click', async function () {
             let data = {
                 id: document.querySelector('#id_movie').value,
             };
-            deleteMovie(data, success)
+            await deleteMovie(data, success)
         });
     }
 
@@ -157,7 +177,7 @@ class MoviesListeners {
      */
     handleClickOnCancelButton = function () {
         let cancelButton = document.querySelector("#btn_cancel");
-        cancelButton.addEventListener('click', function () {
+        cancelButton.addEventListener('click', function (e) {
             clear.clearMovieForm();
         });
     }
@@ -169,14 +189,14 @@ class MoviesListeners {
      */
     handleClickOnUpdateButton = function (putMovie, success) {
         let updateButton = document.querySelector("#btn_update");
-        updateButton.addEventListener('click', function () {
+        updateButton.addEventListener('click', async function () {
             let data = {
                 id: document.querySelector('#id_movie').value,
                 title: document.querySelector('#title_movie').value,
                 created_at: document.querySelector('#createdAt_movie').value,
                 duration: document.querySelector('#duration_movie').value,
             };
-            putMovie(data, success)
+            await putMovie(data, success)
         });
     }
 }
@@ -319,17 +339,15 @@ class MoviesAjax {
  * listeners and ajax are object inside the scop of movies
  * templates, messageAlert and clear are object in the global scop from common.js file
  */
-(function (templates, messageAlert, clear) {
+(function (templates, messageAlert, clear, dataTable) {
     const listeners = new MoviesListeners();
     const ajax = new MoviesAjax();
     new Movies(
         templates,
         messageAlert, 
-        clear, 
+        clear,
+        dataTable, 
         listeners, 
         ajax
     );
-})(templates, messageAlert, clear)
-
-
-
+})(templates, messageAlert, clear, dataTable)

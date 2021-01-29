@@ -6,8 +6,8 @@ body{
     background-size: cover;
 }
     
-label{
-    text-shadow: 2px -2px 2px black;
+label, a{
+    text-shadow: 2px 2px 2px black;
 }
 
 
@@ -31,3 +31,10 @@ label{
     --transparent: rgba(0,0,0,1);
 }
 
+
+div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTables_filter label {
+    padding-top: 0.85em;
+    white-space: nowrap;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+}

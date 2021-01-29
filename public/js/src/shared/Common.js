@@ -57,7 +57,6 @@ class Templates {
                 <td>
                     <button type="button" data-id="${movie.id}" class="btn btn-primary copyButton">
                         Select
-                        <img src="public/assets/svg/tabler-icon-copy.svg" alt="select button"/>
                     </button>
                 </td>
             </tr>`;
@@ -99,10 +98,12 @@ class Clear {
     }
 }
 
+
 /**
  * Instances of objects in the general scop 
  */
 const templates = new Templates();
 const messageAlert = new MessageAlert();
 const clear = new Clear();
+
 
