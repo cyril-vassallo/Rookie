@@ -52,8 +52,8 @@ Rookie has been build for new developer that are learning PHP.
 
 Rookie-Project // Your root clone folder 
 - config
-	- config_dev.ini
-	- config_prod.ini
+	- paths_dev.ini
+	- paths_prod.ini
 	- db_init_script.sql
 	- routes.ini
 - Rookie

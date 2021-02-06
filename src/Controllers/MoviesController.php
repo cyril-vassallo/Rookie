@@ -19,7 +19,7 @@ class MoviesController extends Controller {
 	public function __construct()	{
 		parent::__construct();
 		$this->moviesService = new MoviesServices();
-		$this->MoviesController($this->request->method, $this->request->bJSON);
+		$this->MoviesController($this->request->method, $this->request->JSON);
 	}
 	
 	public function __destruct()	{
@@ -33,16 +33,16 @@ class MoviesController extends Controller {
 	 * @param string $method
 	 * @return void
 	 */
-	private function MoviesController(string $method, bool $bJSON){
-		if(!$bJSON && $method === 'VIEW'){
+	private function MoviesController(string $method, bool $JSON){
+		if(!$JSON && $method === 'VIEW'){
 			$this->InitialView($this->request->payload);
-		}else if($bJSON && $method === 'DELETE'){
+		}else if($JSON && $method === 'DELETE'){
 			$this->DeleteMovie($this->request->payload);
-		}else if($bJSON && $method === 'POST'){
+		}else if($JSON && $method === 'POST'){
 			$this->PostMovie($this->request->payload);
-		}else if($bJSON && $method === 'PUT'){
+		}else if($JSON && $method === 'PUT'){
 			$this->PutMovie($this->request->payload);
-		}else if($bJSON && $method === 'GET'){	
+		}else if($JSON && $method === 'GET'){	
 			$this->GetMovie($this->request->payload);
 		}
 	}

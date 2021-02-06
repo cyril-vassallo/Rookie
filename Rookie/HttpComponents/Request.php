@@ -10,7 +10,7 @@ class Request {
 
 	private $PATH;
 	public $method;
-	public $bJSON;
+	public $JSON;
 	public $query;
 	public $payload;
 	
@@ -18,7 +18,7 @@ class Request {
 		$this->PATH = Loader::getPATHS();
 		$this->query= [];
 		$this->payload = [];
-		$this->bJSON = true;
+		$this->JSON = true;
 		$this->method = 'VIEW';
 		$this->setPostPayload();
 		$this->setGetQuery();
@@ -50,10 +50,10 @@ class Request {
 	}
 
 	private function isJsonParamExist(){
-		if(!(isset($this->payload["bJSON"])) || $this->payload["bJSON"] == false) {
-			$this->bJSON = false;
+		if(!(isset($this->payload["JSON"])) || $this->payload["JSON"] == false) {
+			$this->JSON = false;
 		}else{
-			$this->bJSON = true;
+			$this->JSON = true;
 		}
 	}
 	

@@ -18,7 +18,7 @@ class HomeController extends Controller {
 
 	public function __construct()	{
 		parent::__construct();
-		$this->HomeController($this->request->method, $this->request->bJSON);
+		$this->HomeController($this->request->method, $this->request->JSON);
 
 	}
 
@@ -32,8 +32,8 @@ class HomeController extends Controller {
 	 * @param string $method
 	 * @return void
 	 */
-	private function HomeController(string $method, bool $bJSON){
-		if(!$bJSON && $method === 'VIEW'){
+	private function HomeController(string $method, bool $JSON){
+		if(!$JSON && $method === 'VIEW'){
 			$this->InitialView($this->request->payload);
 		}
 	}

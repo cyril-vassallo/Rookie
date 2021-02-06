@@ -216,7 +216,7 @@ class MoviesAjax {
         let dataToSend = {
             method: 'GET',
             route: "movies",
-            bJSON: true,
+            JSON: true,
             id: data.id
         }
         $.ajax({
@@ -246,7 +246,7 @@ class MoviesAjax {
         let dataToSend = {
             method: 'POST',
             route: "movies",
-            bJSON: true,
+            JSON: true,
             title: data.title,
             created_at: data.created_at,
             duration: data.duration
@@ -277,7 +277,7 @@ class MoviesAjax {
         let dataToSend = {
             method: 'PUT',
             route: "movies",
-            bJSON: true,
+            JSON: true,
             id: data.id,
             title: data.title,
             created_at: data.created_at,
@@ -310,7 +310,7 @@ class MoviesAjax {
         let dataToSend = {
             method: 'DELETE',
             route: "movies",
-            bJSON: true,
+            JSON: true,
             id: data.id,
         }
         $.ajax({
