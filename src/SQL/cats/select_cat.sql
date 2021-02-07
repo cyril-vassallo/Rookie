@@ -1,0 +1,1 @@
+SELECT * FROM `cat` WHERE id = :id;

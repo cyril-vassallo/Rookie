@@ -1,0 +1,1 @@
+DELETE FROM `cat` WHERE id = :id;

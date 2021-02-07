@@ -1,0 +1,1 @@
+UPDATE `cat` SET name = :name , owner= :owner, age=:age, style= :style WHERE id=:id;
