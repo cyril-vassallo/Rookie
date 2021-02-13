@@ -1,6 +1,6 @@
 <?php
 
-//namespace App\Controllers;
+namespace App\Controllers;
 
 use Rookie\Legacy\Controller;
 use App\Services\MoviesServices;
@@ -27,7 +27,7 @@ class HomeController extends Controller {
 	}
 
 	/**
-	 * Control the action server according to different methods for the movies route 
+	 * Control the action server according to different methods for the home route 
 	 *
 	 * @param string $method
 	 * @return void
