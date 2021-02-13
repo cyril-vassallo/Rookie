@@ -1,4 +1,5 @@
 ###> Rookie/v13/ ###
 /vendor/
+/node_modules/
 .env
 .htaccess-prod

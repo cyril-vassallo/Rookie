@@ -1,6 +1,7 @@
 <?php
 namespace Rookie\Kernel;
 
+
 /**
  * The Rooter Class 
  * Manage routes and requested Controller
@@ -31,21 +32,33 @@ class Router
 
 
 	/**
-	 * Return the current controller path
+	 * Return the current path to controller file
 	 *
 	 * @return [string] 
 	 */
-	public function getControllerPath(){
+	public function getPathToControllerFile(){
 		return $_ENV["ROOT"] . $this->PATH["CONTROLLER"] . $this->controller . ".php";
 	}
 
 
 	/**
+	 * Return the required controller instance
+	 *
+	 * @return Object
+	 */
+	public function getControllerInstance(){
+		$controller = 'Controllers';
+		$newControllerInstance = 'App\\'.$controller.'\\'. $this->getControllerName();	
+		return new $newControllerInstance();
+	}
+
+	
+	/**
 	 * Return the current controller name
 	 *
 	 * @return [string]
 	 */
-	public function getControllerName(){
+	private function getControllerName(){
 		return $this->controller;
 	}
 	

@@ -1,6 +1,6 @@
 <?php
 
-//namespace App\Controllers;
+namespace App\Controllers;
 
 use Rookie\Legacy\Controller;
 use App\Services\MoviesServices;

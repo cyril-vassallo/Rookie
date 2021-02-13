@@ -100,10 +100,13 @@ class Clear {
 
 
 /**
- * Instances of objects in the general scop 
- */
+ *  Instances of objects in the general scop 
+*/
 const templates = new Templates();
 const messageAlert = new MessageAlert();
 const clear = new Clear();
+
+
+
 
 

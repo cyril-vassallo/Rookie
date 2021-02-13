@@ -8,13 +8,13 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" href="public/library/bootstrap/bootstrap.min.css">
-	<link rel="stylesheet" href="public/src/shared/globals.css" />
-    <link rel="stylesheet" href="public/src/pages/home/home.css" />  
+	<link rel="stylesheet" href="public/css/globals/globals.css" />
+    <link rel="stylesheet" href="public/css/pages/home/home.css" />  
 </head>
 
 <body>
-	<div class="welcome-page">
-		{% set baseUrl = 'Rookie-Project/'%}
+    <div class="welcome-page">
+        {% set baseUrl = 'Rookie-Project/'%}
         <section>
             <div>
                 <div class="presentation">
@@ -37,6 +37,8 @@
                 </div>
             </div>
         </div>
+        <script src="public/library/systemjs/system.min.js"></script>
+        <script src="public/dist/shared/SystemJSLoader.js"></script>
 		<script src="public/library/jquery/jquery.min.js"></script>
 		<script src="public/library/bootstrap/bootstrap.min.js"></script>
 	</div>
