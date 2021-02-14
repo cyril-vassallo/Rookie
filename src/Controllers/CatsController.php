@@ -4,8 +4,6 @@ namespace App\Controllers;
 
 use Rookie\Legacy\Controller;
 
-require_once $_ENV['ROOT'] . $PATH['LEGACY'] . 'Controller.php';
-
 /**
  * @Controller
  * @Route: 'cats'

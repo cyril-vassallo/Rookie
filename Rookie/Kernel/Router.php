@@ -1,6 +1,8 @@
 <?php
 namespace Rookie\Kernel;
 
+use Rookie\Kernel\Loader;
+
 
 /**
  * The Rooter Class 
@@ -20,8 +22,8 @@ class Router
 	 * if the requested controller exist
 	 * else provide a default route and controller
 	 */
-	public function __construct($PATH){
-		$this->PATH = $PATH;
+	public function __construct(){
+		$this->PATH = Loader::pathsLoader();
 		$this->parseRoutesFile();
 		$this->catchRouteFromHttpRequest();
 		//$this->checkAuthorizedUsers();
@@ -30,36 +32,24 @@ class Router
 	}
 	
 
-
-	/**
-	 * Return the current path to controller file
-	 *
-	 * @return [string] 
-	 */
-	public function getPathToControllerFile(){
-		return $_ENV["ROOT"] . $this->PATH["CONTROLLER"] . $this->controller . ".php";
-	}
-
-
-	/**
-	 * Return the required controller instance
-	 *
-	 * @return Object
-	 */
-	public function getControllerInstance(){
-		$controller = 'Controllers';
-		$newControllerInstance = 'App\\'.$controller.'\\'. $this->getControllerName();	
-		return new $newControllerInstance();
-	}
-
-	
 	/**
 	 * Return the current controller name
 	 *
 	 * @return [string]
 	 */
-	private function getControllerName(){
+	public function getControllerName(){
 		return $this->controller;
+	}
+
+	/**
+	 * Return the required controller instance
+	 *
+	 * @return void
+	 */
+	public function getControllerInstance(){
+		$path = '\App\\Controllers\\';
+		$newControllerInstance = $path . $this->getControllerName();
+		return new $newControllerInstance();
 	}
 	
 	/**
