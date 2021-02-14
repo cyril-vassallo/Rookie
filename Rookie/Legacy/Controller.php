@@ -1,17 +1,18 @@
 <?php
 namespace Rookie\Legacy;
 
-use Rookie\TemplateEngine\View;
 use Rookie\HttpComponents\Request;
+use Rookie\TemplateEngine\View;
 
 /**
+ * @author Cyril VASSALLO
  * Init object in constructor and provide necessary methods for controllers
  */
-class Controller {
+class Controller
+{
 
     protected $request;
     protected $twig;
-    
 
     public function __construct()
     {
@@ -19,11 +20,11 @@ class Controller {
         $this->twig = View::getTwig();
     }
 
-    public function __destruct()	{
-		unset($this->request);
-		unset($this->twig);
-	}
-
+    public function __destruct()
+    {
+        unset($this->request);
+        unset($this->twig);
+    }
 
     /**
      * Prepare the JSON response
@@ -39,5 +40,3 @@ class Controller {
         echo json_encode($data);
     }
 }
-
-?>
