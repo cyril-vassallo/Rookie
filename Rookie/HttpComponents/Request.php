@@ -15,7 +15,7 @@ class Request {
 	public $payload;
 	
 	function __construct()	{
-		$this->PATH = Loader::getPATHS();
+		$this->PATH = Loader::pathsLoader();
 		$this->query= [];
 		$this->payload = [];
 		$this->JSON = true;

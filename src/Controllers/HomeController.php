@@ -5,8 +5,6 @@ namespace App\Controllers;
 use Rookie\Legacy\Controller;
 use App\Services\MoviesServices;
 
-require_once $_ENV["ROOT"] . $PATH["SERVICES"]. "MoviesServices.php";
-require_once $_ENV["ROOT"] . $PATH["LEGACY"]. "Controller.php";
 
 /**
  * @Controller

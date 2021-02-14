@@ -1,18 +1,21 @@
 <?php
+
 namespace Rookie\Kernel;
 
 use Exception;
+
+
 /**
  * @author Cyril VASSALLO <cyrilvssll34@gmail.com>
- * This class provide a method to get Global Paths
- *
+ * This class contain statics methods pathLoader and classLoader
  */
 Class Loader	{
+
 	/**
-	 * Read the config_xxx.ini files and return an array of Global CONST
+	 * Load the config_xxx.ini files and return an array of Global Constants for path
 	 * @return array
 	 */
-	public static function getPATHS() {
+	public static function pathsLoader() {
 		try{
 			$DOCUMENT_ROOT = getcwd(); // GET CURRENT WORKING DIRECTORY
 			$aOfPaths= explode("/", $DOCUMENT_ROOT);
@@ -35,7 +38,43 @@ Class Loader	{
 			echo $e ;
 		}
 	}
-	
+
+	 /**
+	 * Callable for spl_autoload_register in index.php
+     * @param string $namespace
+     */
+    public static function classLoader(string $namespace)
+  	{
+		$splitNamespace = explode('\\', $namespace);
+		$class = $splitNamespace[count($splitNamespace)-1];
+		if(file_exists($_ENV['ROOT']. 'Rookie/Kernel/' . $class . '.php')){
+			require_once $_ENV['ROOT']. 'Rookie/Kernel/' . $class . '.php';
+		}
+		else if(file_exists($_ENV["ROOT"] .'src/Controllers/' .$class .'.php'))
+		{
+			require_once $_ENV["ROOT"] .'src/Controllers/' .$class .'.php';
+		}
+		else if(file_exists($_ENV["ROOT"] .'src/Services/' .$class .'.php'))
+		{
+			require_once $_ENV["ROOT"] .'src/Services/' .$class .'.php';
+		}
+		else if(file_exists($_ENV["ROOT"] .'Rookie/Legacy/' .$class .'.php'))
+		{
+			require_once $_ENV["ROOT"] .'Rookie/Legacy/' .$class .'.php';
+		}
+		else if(file_exists($_ENV["ROOT"] .'Rookie/HttpComponents/' .$class .'.php'))
+		{
+			require_once $_ENV["ROOT"] .'Rookie/HttpComponents/' .$class .'.php';
+		}
+		else if(file_exists($_ENV["ROOT"] .'Rookie/DataComponents/' .$class .'.php'))
+		{
+			require_once $_ENV["ROOT"] .'Rookie/DataComponents/' .$class .'.php';
+		}
+		else if(file_exists($_ENV["ROOT"] .'Rookie/TemplatesEngine/' .$class .'.php'))
+		{
+			require_once $_ENV["ROOT"] .'Rookie/TemplatesEngine/' .$class .'.php';
+		}	
+	}	
 }
 
 ?>

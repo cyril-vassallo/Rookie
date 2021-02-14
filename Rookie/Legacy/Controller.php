@@ -4,19 +4,17 @@ namespace Rookie\Legacy;
 use Rookie\TemplateEngine\View;
 use Rookie\HttpComponents\Request;
 
-require_once $_ENV["ROOT"] . $PATH["HTTP"]. "Request.php";
-require_once $_ENV["ROOT"] . $PATH["ENGINE"] . "View.php";
-
+/**
+ * Init object in constructor and provide necessary methods for controllers
+ */
 class Controller {
 
-    public $jsonResponse;
     protected $request;
     protected $twig;
     
 
     public function __construct()
     {
-        $this->jsonResponse = [];
         $this->request = new Request();
         $this->twig = View::getTwig();
     }

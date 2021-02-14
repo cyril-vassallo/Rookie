@@ -1,8 +1,6 @@
 <?php
 namespace Rookie\TemplateEngine;
 
-require_once $_ENV["ROOT"] . $PATH["AUTOLOAD"];
-
 
 use Twig\Environment;
 use Rookie\Kernel\Loader;
@@ -18,7 +16,7 @@ class View {
      * @return object $twig
      */
     public static function getTwig(){
-        $PATH= Loader::getPATHS();
+        $PATH= Loader::pathsLoader();
         $loader = new FilesystemLoader($_ENV["ROOT"] . $PATH["VIEW"]);
         $twig = new Environment($loader, [
             'debug' => true,

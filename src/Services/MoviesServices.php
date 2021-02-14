@@ -3,8 +3,6 @@ namespace App\Services;
 
 use Rookie\DataComponent\Initialize;
 
-require_once $_ENV["ROOT"] . $PATH["DB"]."Initialize.php";
-
 /**
  * @Service
  * @Target Entity: Movies

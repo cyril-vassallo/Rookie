@@ -4,9 +4,11 @@ namespace Rookie\DataComponent;
 use Rookie\Kernel\Loader;
 use Rookie\DataComponents\Database;
 
-require_once $_ENV["ROOT"] . $PATH["DB"]."Database.php";
 
-
+/**
+ * @author Cyril VASSALLO <cyrilvssll34@gmail.com>
+ * This class contain à constructor to initialize data access to the service layer
+ */
 Class Initialize	{
 
 	/**
@@ -41,7 +43,7 @@ Class Initialize	{
 	 * Create a database connection and init services variables and Constant
 	 */
 	public function __construct()	{
-		$this->PATH = Loader::getPATHS();
+		$this->PATH = Loader::pathsLoader();
 		$this->database = new Database();
 		$this->queryResults = [];						   
 	}
