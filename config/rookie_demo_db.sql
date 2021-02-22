@@ -25,10 +25,35 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `cat`
+--
+
+CREATE TABLE IF NOT EXISTS Rookie.cat (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `owner` varchar(20) NOT NULL,
+  `style` varchar(20) NOT NULL,
+  `age` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
+
+--
+-- Contenu de la table `actor`
+--
+
+INSERT INTO Rookie.cat ( `name`, `owner`, `style`, `age`) VALUES
+( 'Rookie', 'Cyril VASSALLO', 'gray angora',0),
+( 'Figaro', 'Geppetto', 'Polisson', 1),
+( 'Azraël', 'John Doe', 'Impitoyable', 5),
+( 'Garfield', 'Jonathan Q. Arbuckle', 'Paresseux', 6),
+( 'Sylvestre', 'Mémé', 'Tenace', 4),
+( 'Lucifer', 'Madame de Trémaine', 'Diabolique', 7)
+
+--
 -- Structure de la table `actor`
 --
 
-CREATE TABLE IF NOT EXISTS `actor` (
+CREATE TABLE IF NOT EXISTS `actor` (  
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
   `firstname` varchar(20) NOT NULL,
@@ -109,3 +134,4 @@ ALTER TABLE `movie__actor`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+

@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use Exception;
 use Rookie\Legacy\Controller;
 
 /**
@@ -16,7 +17,8 @@ class HomeController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->HomeController($this->request->method, $this->request->JSON);
+        $this->HomeController($this->request->method, $this->request->json);
+    
 
     }
 
@@ -31,10 +33,10 @@ class HomeController extends Controller
      * @param string $method
      * @return void
      */
-    private function HomeController(string $method, bool $JSON)
+    private function HomeController(string $method, bool $json)
     {
-        if (!$JSON && $method === 'VIEW') {
-            $this->InitialView($this->request->payload);
+        if (!$json) {
+            $this->InitialView();
         }
     }
 
@@ -44,7 +46,7 @@ class HomeController extends Controller
      * @method: 'VIEW'
      * @Response: 'Content-Type: text/Html'
      */
-    private function InitialView(array $payload)
+    private function InitialView()
     {
         $controllerData = [
             'title' => 'Hey Rookie, Welcome !',
@@ -53,7 +55,9 @@ class HomeController extends Controller
             'nextController' => 'MoviesController',
             'route' => 'movies',
         ];
-        echo $this->twig->render('home/home.html.twig', $controllerData);
+        $this->VIEW('home/home.html.twig', $controllerData, 200);
+    
+       
     }
 
 }

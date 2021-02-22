@@ -9,10 +9,12 @@ use Rookie\DataComponent\Initialize;
  */
 class MoviesServices extends Initialize
 {
+    private $getQueryResults;
 
     public function __construct()
     {
         parent::__construct();
+        $this->queryResults = null;
     }
 
     public function __destruct()
@@ -23,7 +25,7 @@ class MoviesServices extends Initialize
     /**
      * Getter of the database query results
      *
-     * @return array
+     * @return allType
      */
     public function getQueryResults()
     {
@@ -33,10 +35,9 @@ class MoviesServices extends Initialize
     /**
      * @Select
      *
-     * @param array $payload
      * @return void
      */
-    public function selectMovies(array $payload)
+    public function selectMovies()
     {
         $pathSQL = $_ENV["ROOT"] . $this->PATH["SQL"] . "movies/select_movies.sql";
         $this->queryResults = $this->database->search($pathSQL, array());
@@ -101,7 +102,7 @@ class MoviesServices extends Initialize
      * @return void
      */
     public function updateMovie(array $payload)
-    {
+    {   
         $pathSQL = $_ENV["ROOT"] . $this->PATH["SQL"] . "movies/update_movie.sql";
         $this->database->mutate($pathSQL, array(
             "id" => $payload["id"],
@@ -112,6 +113,5 @@ class MoviesServices extends Initialize
         if (isset($payload["id"])) {
             $this->selectMovie($payload);
         }
-
     }
 }

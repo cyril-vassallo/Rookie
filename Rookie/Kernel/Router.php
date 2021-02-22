@@ -11,6 +11,7 @@ class Router
 {
     private $PATH;
     private $defaultRoute;
+    private $errorRoute;
     private $controller;
     private $routes;
     private $currentRoute;
@@ -65,6 +66,7 @@ class Router
             $parsedRoutesFile = parse_ini_file($routesIniFile, false);
             $this->routes = $parsedRoutesFile['ROUTE'];
             $this->defaultRoute = $parsedRoutesFile['DEFAULT_ROUTE'];
+            $this->errorRoute = $parsedRoutesFile['ERROR_ROUTE'];
         }
     }
 
@@ -111,7 +113,7 @@ class Router
     {
         $this->controller = ucfirst($this->currentRoute . 'Controller');
         if (!(file_exists($_ENV["ROOT"] . $this->PATH["CONTROLLER"] . $this->controller . ".php"))) {
-            $this->controller = ucfirst($this->defaultRoute . 'Controller');
+            $this->controller = ucfirst($this->errorRoute . 'Controller');
         }
     }
 

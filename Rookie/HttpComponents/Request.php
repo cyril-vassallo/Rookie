@@ -13,7 +13,7 @@ class Request
 
     private $PATH;
     public $method;
-    public $JSON;
+    public $json;
     public $query;
     public $payload;
 
@@ -22,8 +22,8 @@ class Request
         $this->PATH = Loader::pathsLoader();
         $this->query = [];
         $this->payload = [];
-        $this->JSON = true;
         $this->method = 'VIEW';
+        $this->json = false;
         $this->setPostPayload();
         $this->setGetQuery();
         $this->isRouteParamExist();
@@ -46,8 +46,9 @@ class Request
     }
 
     private function isRouteParamExist()
-    {
-        if ((!isset($this->payload["route"])) || $this->payload["route"] == '') {
+    {   $hasNoPayloadRoute = !isset($this->payload["route"]) || $this->payload["route"] == '';
+        $hasNoQueryRoute = !isset($this->query["route"]) || $this->query["route"] == '';
+        if ($hasNoPayloadRoute && $hasNoQueryRoute) {
             $routesIniFile = $_ENV["ROOT"] . $this->PATH["CONF"] . 'routes.ini';
             if (is_file($routesIniFile)) {
                 $parsedRoutesFile = parse_ini_file($routesIniFile, false);
@@ -58,19 +59,29 @@ class Request
 
     private function isJsonParamExist()
     {
-        if (!(isset($this->payload["JSON"])) || $this->payload["JSON"] == false) {
-            $this->JSON = false;
-        } else {
-            $this->JSON = true;
+        if (!(isset($this->payload["format"])) || $this->payload["format"] == "html") {
+            $this->json = false;
+            if (!(isset($this->query["format"])) || $this->query["format"] == 'html') {
+                 $this->json = false;
+             }else {
+                 $this->json = true;
+             }
+        }else{
+            $this->json = true; 
         }
     }
 
     private function isMethodParamExist()
     {
-        if (!(isset($this->payload["method"])) || $this->payload["method"] == '') {
-            $this->method = strtoupper($this->payload["method"] = 'VIEW');
-        } else {
-            $this->method = $this->payload['method'];
+        $this->method = 'VIEW';
+        if (isset($this->payload["method"]) ) {
+            $this->method = strtoupper($this->payload['method']);
+        }
+        else if (isset($this->query["method"]) ) {
+            $this->method = strtoupper($this->query['method']);
+        }
+        else {
+            $this->method = 'VIEW';
         }
     }
 

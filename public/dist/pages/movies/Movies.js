@@ -217,17 +217,16 @@ var MoviesListeners = (function () {
 var MoviesAjax = (function () {
     function MoviesAjax() {
         this.getMovie = function (data, success) {
-            var dataToSend = {
+            var payload = {
+                format: "json",
                 method: 'GET',
-                route: "movies",
-                JSON: true,
                 id: data.id
             };
             $.ajax({
                 type: "POST",
                 url: "movies",
                 async: true,
-                data: dataToSend,
+                data: payload,
                 dataType: "json",
                 cache: false,
             })
@@ -239,10 +238,9 @@ var MoviesAjax = (function () {
             });
         };
         this.postMovie = function (data, success) {
-            var dataToSend = {
+            var payload = {
+                format: "json",
                 method: 'POST',
-                route: "movies",
-                JSON: true,
                 title: data.title,
                 created_at: data.created_at,
                 duration: data.duration
@@ -251,7 +249,7 @@ var MoviesAjax = (function () {
                 type: "POST",
                 url: "movies",
                 async: true,
-                data: dataToSend,
+                data: payload,
                 dataType: "json",
                 cache: false,
             })
@@ -263,10 +261,9 @@ var MoviesAjax = (function () {
             });
         };
         this.putMovie = function (data, success) {
-            var dataToSend = {
+            var payload = {
+                format: "json",
                 method: 'PUT',
-                route: "movies",
-                JSON: true,
                 id: data.id,
                 title: data.title,
                 created_at: data.created_at,
@@ -276,7 +273,7 @@ var MoviesAjax = (function () {
                 type: "POST",
                 url: "movies",
                 async: true,
-                data: dataToSend,
+                data: payload,
                 dataType: "json",
                 cache: false,
             })
@@ -288,17 +285,16 @@ var MoviesAjax = (function () {
             });
         };
         this.deleteMovie = function (data, success) {
-            var dataToSend = {
+            var payload = {
+                format: "json",
                 method: 'DELETE',
-                route: "movies",
-                JSON: true,
                 id: data.id,
             };
             $.ajax({
                 type: "POST",
                 url: "movies",
                 async: true,
-                data: dataToSend,
+                data: payload,
                 dataType: "json",
                 cache: false,
             })

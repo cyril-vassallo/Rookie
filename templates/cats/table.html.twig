@@ -1,0 +1,32 @@
+<div class="container mb-5">
+    <table class="display table table-hover" style="width:100%" id="catTable">
+        <thead>
+            <tr>
+                <th hidden>ID</th>
+                <th>CAT NAME</th>
+                <th>STYLE</th>
+                <th>AGE</th>
+                <th>OWNER</th>
+                <th>COPY/PAST 
+                    <img src="public/assets/svg/tabler-icon-copy.svg" alt="select button"/>
+                </th>
+            </tr>
+        </thead>
+        <tbody id="tbodyMovies">
+            {% for cat in cats %}
+            <tr data-id='{{cat.id}}'>
+                <td hidden>{{cat.id}}</td>
+                <td>{{cat.name}}</td>
+                <td>{{cat.style}}</td>
+                <td>{{cat.age}}</td>
+                <td>{{cat.owner}}</td>
+                <td>
+                    <button type="button" data-id="{{cat.id}}" class="btn btn-primary btn_select">
+                        Select
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

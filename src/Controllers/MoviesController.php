@@ -2,8 +2,8 @@
 
 namespace App\Controllers;
 
-use App\Services\MoviesServices;
 use Rookie\Legacy\Controller;
+use App\Services\MoviesServices;
 
 /**
  * @Controller
@@ -18,47 +18,57 @@ class MoviesController extends Controller
     {
         parent::__construct();
         $this->moviesService = new MoviesServices();
-        $this->MoviesController($this->request->method, $this->request->JSON);
+        $this->MoviesController(
+            $this->request->method, 
+            $this->request->json, 
+            $this->request->query ,
+            $this->request->payload
+        );
     }
 
     public function __destruct()
     {
-        parent::__destruct();
         unset($this->moviesService);
+        parent::__destruct();
     }
 
     /**
-     * Control the action server according to different methods for the movies route
+     * Control the action server for the movies route
      *
      * @param string $method
      * @return void
      */
-    private function MoviesController(string $method, bool $JSON)
+    private function MoviesController(string $method, bool $json, array $query, array $payload)
     {
-        if (!$JSON && $method === 'VIEW') {
-            $this->InitialView($this->request->payload);
-        } else if ($JSON && $method === 'DELETE') {
-            $this->DeleteMovie($this->request->payload);
-        } else if ($JSON && $method === 'POST') {
-            $this->PostMovie($this->request->payload);
-        } else if ($JSON && $method === 'PUT') {
-            $this->PutMovie($this->request->payload);
-        } else if ($JSON && $method === 'GET') {
-            $this->GetMovie($this->request->payload);
-        }
+        if (!$json && $query != []) {
+            $this->initialView();
+        }else {
+            //has json
+            if ($method === 'DELETE' && $payload != []) {
+                $this->deleteMovie($payload);
+            } else if ($method === 'POST' && $payload != []) {
+                $this->postMovie($payload);
+            } else if ($method === 'PUT' && $payload != []) {
+                $this->putMovie($payload);
+            } else if ($method === 'GET' && $payload != [] ) {
+                $this->getMovie($payload);
+            } else {
+                header('Location:error');
+            }
+        } 
     }
 
     /**
-     * Read a movies Collection
+     * Display a movies Collection
      * @Query: 'GET'
      * @method: 'VIEW'
-     * @Response: 'Content-Type: text/plain'
+     * @Response: 'Content-Type: text/html'
      */
-    private function InitialView(array $payload)
+    private function initialView()
     {
-        $this->moviesService->selectMovies($payload);
+        $this->moviesService->selectMovies();
         $movies = $this->moviesService->getQueryResults();
-        echo $this->twig->render('movies/movies.html.twig', ['movies' => $movies]);
+        $this->VIEW('movies/movies.html.twig', ['movies' => $movies], 200);
     }
 
     /**
@@ -67,7 +77,7 @@ class MoviesController extends Controller
      * @method: 'DELETE'
      * @Response: 'Content-Type: application/json'
      */
-    private function DeleteMovie(array $payload)
+    private function deleteMovie(array $payload)
     {
         $this->moviesService->deleteMovie($payload);
         $this->JSON($this->moviesService->getQueryResults(), 200);
@@ -79,7 +89,7 @@ class MoviesController extends Controller
      * @method: 'POST'
      * @Response: 'Content-Type: application/json'
      */
-    private function PostMovie(array $payload)
+    private function postMovie(array $payload)
     {
         $this->moviesService->insertMovie($payload);
         $this->JSON($this->moviesService->getQueryResults(), 200);
@@ -91,7 +101,7 @@ class MoviesController extends Controller
      * @method: 'PUT'
      * @Response: 'Content-Type: application/json'
      */
-    private function PutMovie(array $payload)
+    private function putMovie(array $payload)
     {
         $this->moviesService->updateMovie($payload);
         $this->JSON($this->moviesService->getQueryResults(), 200);
@@ -104,7 +114,7 @@ class MoviesController extends Controller
      * @method: 'GET'
      * @Response: 'Content-Type: application/json'
      */
-    private function GetMovie(array $payload)
+    private function getMovie(array $payload)
     {
         $this->moviesService->selectMovie($payload);
         $this->JSON($this->moviesService->getQueryResults(), 200);

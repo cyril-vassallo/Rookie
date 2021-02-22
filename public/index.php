@@ -19,7 +19,14 @@ spl_autoload_register('Rookie\Kernel\Loader::classLoader');
 //Route the application
 $router = new Router();
 //Execute the required Controller
-$app = $router->getControllerInstance();
+try
+{
+    $app = $router->getControllerInstance();
+}
+catch(Exception $e)
+{ 
+    echo $e;
+}
 //Destroy the app object
 unset($app);
 

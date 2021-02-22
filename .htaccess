@@ -8,10 +8,22 @@ RewriteEngine on
 # URL RewriteRule :
 #--------------------------------------------------
 
-# Redirection on route with one query string param
+# Redirection on route with no free option
 RewriteRule ^([a-z_]*)$   public/index.php?route=$1 [L]
-RewriteRule ^([a-z_]*)/$   public/index.php?route=$1 [L]
 
-# Redirection on route with two query string params
-RewriteRule ^([a-z_]*)/([a-z0-9_]*)$   public/index.php?route=$1&param=$2 [L]
-RewriteRule ^([a-z_]*)/([a-z0-9_]*)/$   public/index.php?route=$1&param=$2 [L]
+# Redirection on route with option1
+RewriteRule ^([a-z_]*):(html|json)$   public/index.php?route=$1&format=$2 [L]
+
+# Redirection on route with option1
+RewriteRule ^([a-z_]*):(html|json)-([a-z_]*)$   public/index.php?route=$1&format=$2&method=$3 [L]
+
+# Redirection on route with option1
+RewriteRule ^([a-z_]*):(html|json)-([a-z_]*):options=([a-z0-9_]*)$   public/index.php?route=$1&format=$2&method=$3&option1=$4 [L]
+
+# Redirection on route and option1,2
+RewriteRule ^([a-z_]*):(html|json)-([a-z_]*):options=([a-z0-9_]*)-([a-z0-9_]*)$   public/index.php?route=$1&format=$2&method=$3&option1=$4&option2=$5 [L]
+
+# Redirection on route with option1,2,3
+RewriteRule ^([a-z_]*):(html|json)-([a-z_]*):options=([a-z0-9_]*)-([a-z0-9_]*)-([a-z0-9_]*)$   public/index.php?route=$1&format=$2&method=$3&option1=$4&option2=$5&option3=$6 [L]
+
+

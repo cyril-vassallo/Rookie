@@ -1,0 +1,50 @@
+
+<form method="POST" action="confirm" class="container">
+    <div class="row" hidden>
+        <div class="col">
+            <div class="form-group">
+                <label for="id_cat">Id</label>
+                <input placeholder="empty" class="form-control" type="text" name="id_cat" id="id_cat" disabled />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label for="name_cat">Cat Name</label>
+                <input placeholder="empty" class="form-control" type="text" name="name_cat" id="name_cat" />
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="age_cat">age - years</label>
+                <input placeholder="empty" class="form-control" type="text" name="age_cat" id="age_cat" />
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="owner_cat">Owner name</label>
+                <input placeholder="empty" class="form-control" type="text" name="owner_cat" id="owner_cat" />
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center my-5">
+        <button type="button" name='create' class="btn btn-success mx-2" id="btn_create">
+            <img src="public/assets/svg/icon-tabler-circle-plus.svg" alt="create button"/>
+            CREATE
+        </button>
+        <button type="button" name="update" class="btn btn-info mx-2" id="btn_update">
+            <img src="public/assets/svg/icon-tabler-edit.svg" alt="update button"/>
+            UPDATE
+        </button>
+        <button type="button" name="cancel" class="btn btn-primary mx-2" id="btn_cancel">
+            <img src="public/assets/svg/icon-tabler-circle-x.svg" alt="cancel button"/>
+            CANCEL
+        </button>
+        <button type="button" name="delete" class="btn btn-danger mx-2" id="btn_delete">
+            <img src="public/assets/svg/icon-tabler-circle-minus.svg" alt="delete button"/>
+            DELETE
+        </button>
+    </div>
+</form>
+  

@@ -213,17 +213,16 @@ class MoviesAjax {
      * @param {function} success 
      */
     getMovie = function (data, success) {
-        let dataToSend = {
+        let payload = {
+            format: "json",
             method: 'GET',
-            route: "movies",
-            JSON: true,
             id: data.id
         }
         $.ajax({
             type: "POST",
             url: "movies",
             async: true,
-            data: dataToSend,
+            data: payload,
             dataType: "json",
             cache: false,
         })
@@ -243,10 +242,9 @@ class MoviesAjax {
      * @param {function} success 
      */
     postMovie = function (data, success) {
-        let dataToSend = {
+        let payload = {
+            format: "json",
             method: 'POST',
-            route: "movies",
-            JSON: true,
             title: data.title,
             created_at: data.created_at,
             duration: data.duration
@@ -255,7 +253,7 @@ class MoviesAjax {
             type: "POST",
             url: "movies",
             async: true,
-            data: dataToSend,
+            data: payload,
             dataType: "json",
             cache: false,
         })
@@ -274,10 +272,9 @@ class MoviesAjax {
      * @param {function} success 
      */
     putMovie = function (data, success) {
-        let dataToSend = {
+        let payload = {
+            format: "json",
             method: 'PUT',
-            route: "movies",
-            JSON: true,
             id: data.id,
             title: data.title,
             created_at: data.created_at,
@@ -287,7 +284,7 @@ class MoviesAjax {
             type: "POST",
             url: "movies",
             async: true,
-            data: dataToSend,
+            data: payload,
             dataType: "json",
             cache: false,
         })
@@ -307,17 +304,16 @@ class MoviesAjax {
      * @param {function} success 
      */
     deleteMovie = function (data, success) {
-        let dataToSend = {
+        let payload = {
+            format: "json",
             method: 'DELETE',
-            route: "movies",
-            JSON: true,
             id: data.id,
         }
         $.ajax({
             type: "POST",
             url: "movies",
             async: true,
-            data: dataToSend,
+            data: payload,
             dataType: "json",
             cache: false,
         })
