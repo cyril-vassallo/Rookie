@@ -5,11 +5,10 @@
 {% block stylesheet %}
     <link rel="stylesheet" type="text/css" href="public/library/dataTables/dataTables.bootstrap4.min.css" />
     <link rel="stylesheet" type="text/css" href="public/library/dataTables/dataTables.min.css" />
-    <!-- <link rel="stylesheet" href="public/css/pages/cats/cats.css" /> -->
 {% endblock %}
 
 {% block body %}
-    <section class="section">
+    <section class="section-cats">
         {% include 'cats/header.html.twig'%}
         {% include 'cats/table.html.twig'%}
         {% include 'cats/form.html.twig'%}
@@ -17,9 +16,7 @@
 {% endblock %}
 
 {% block javascript %}
-    <script type="text/javascript" src="public/library/dataTables/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="public/library/dataTables/dataTables.bootstrap4.min.js"></script>
-    <script type="text/javascript" src="public/library/dataTables/dataTables.min.js"></script>
-    <script type="text/javascript" src="public/dist/shared/DataTableBuilder.js"></script>
-    <!-- <script type="text/javascript" src="public/dist/pages/cats/cats.js"></script> -->
+   <script type="text/javascript" src="public/library/dataTables/jquery.dataTables.min.js"></script>
+   <script type="text/javascript" src="public/library/dataTables/dataTables.bootstrap4.min.js"></script>
+   <script type="text/javascript" src="public/library/dataTables/dataTables.min.js"></script>
 {% endblock %}

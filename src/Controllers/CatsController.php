@@ -39,22 +39,28 @@ class CatsController extends Controller
      **/
     private function CatsController(string $method, bool $json, array $query, array $payload)
     {
+        $method = 'error';
         if (!$json && $query != []) {
             $this->initialView();
+            $method = "initialView";
         } else {
             //has json
             if ($method === 'GET' && $payload != []) {
                 $this->getCat($payload);
+                $method = "getCat";
             } else if ($method === 'POST' && $payload != []) {
                 $this->postCat($payload);
+                $method = "postCat";
             } else if ($method === 'DELETE' && $payload != []) {
                 $this->deleteCat($payload);
             } else if ($method === 'PUT' && $payload != []) {
                 $this->putCat($payload);
+                $method = "putCat";
             } else {
                 header('Location:error');
             }
         }
+        return $method;
     }
 
 

@@ -58,6 +58,8 @@ class Loader
             require_once $_ENV["ROOT"] . 'Rookie/DataComponents/' . $class . '.php';
         } else if (file_exists($_ENV["ROOT"] . 'Rookie/TemplatesEngine/' . $class . '.php')) {
             require_once $_ENV["ROOT"] . 'Rookie/TemplatesEngine/' . $class . '.php';
+        }else if (file_exists($_ENV["ROOT"] . 'tests/Controllers/' . $class . '.php')) {
+            require_once $_ENV["ROOT"] . 'tests/Controllers/' . $class . '.php';
         }
     }
 }

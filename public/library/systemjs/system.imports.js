@@ -1,4 +1,4 @@
-const SystemJSConf = {
+const systemJSConf = {
     baseFolderPath : './public/dist/pages/'
 }
 
@@ -6,7 +6,7 @@ const SystemJSConf = {
  * @Class 
  * Import javascript on demand
  */
-class SystemJSImports{
+class SystemImport{
     constructor({baseFolderPath}){
         this.baseFolderPath = baseFolderPath;
         this.path = this.getPath();
@@ -24,10 +24,10 @@ class SystemJSImports{
     importMainPageModule = function(){
         System.import(this.path);
     }
-
+ 
 }
 
 /**
  * Instances of objects in the general scop 
  */
-const systemJSImports = new SystemJSImports(SystemJSConf);
+const systemImport = new SystemImport(systemJSConf);
