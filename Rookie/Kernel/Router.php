@@ -2,6 +2,7 @@
 namespace Rookie\Kernel;
 
 use Rookie\Kernel\Loader;
+use App\Services\LogServices;
 
 /**
  * @author Cyril VASSALLO
