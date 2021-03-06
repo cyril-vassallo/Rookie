@@ -12,6 +12,7 @@ require_once __DIR__."/../../vendor/autoload.php";
 $dotenv = Dotenv::createImmutable(__DIR__.'/../../');
 $dotenv->load();
 $_ENV['ROOT'] = __DIR__.'/../../';
+
 //Start the session
 session_start();
 //Autoload classes

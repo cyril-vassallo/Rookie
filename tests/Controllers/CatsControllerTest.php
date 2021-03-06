@@ -1,5 +1,7 @@
 <?php 
 
+namespace Test\Controllers;
+
 require __DIR__.'/../../Rookie/Kernel/TestLoader.php';
 
 use PHPUnit\Framework\TestCase;
