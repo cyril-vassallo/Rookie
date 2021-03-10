@@ -1,7 +1,6 @@
 <?php
-namespace Rookie\TemplateEngine;
+namespace Rookie\TemplatesEngine;
 
-use Rookie\Kernel\Loader;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
@@ -19,14 +18,16 @@ class View
      */
     public static function getTwig()
     {
-        $PATH = Loader::pathsLoader();
-        $loader = new FilesystemLoader($_ENV["ROOT"] . $PATH["VIEW"]);
+        //$_PATH = Loader::paths();
+        $loader = new FilesystemLoader($_ENV["ROOT"] . $_ENV["VIEW"]);
         $twig = new Environment($loader, [
             'debug' => true,
             // ...
         ]);
         $twig->addExtension(new DebugExtension());
-        $twig->addGlobal('SESSION', $_SESSION);
+        if(isset($_SESSION)){
+            $twig->addGlobal('SESSION', $_SESSION);
+        }
         return $twig;
     }
 }

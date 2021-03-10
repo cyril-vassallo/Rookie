@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use Rookie\DataComponent\Initialize;
+use Rookie\DataComponents\Initialize;
 
 class CatsServices extends Initialize
 {
@@ -34,7 +34,7 @@ class CatsServices extends Initialize
      */
     public function selectCats(): void
     {
-        $pathSQL = $_ENV["ROOT"] . $this->PATH["SQL"] . "cats/select_cats.sql";
+        $pathSQL = $_ENV["ROOT"] . $_ENV["SQL"] . "cats/select_cats.sql";
         $this->queryResults = $this->database->search($pathSQL);
     }
 
@@ -45,7 +45,7 @@ class CatsServices extends Initialize
      */
     public function selectCat(array $payload): void
     {
-        $pathSQL = $_ENV["ROOT"] . $this->PATH["SQL"] . "cats/select_cat.sql";
+        $pathSQL = $_ENV["ROOT"] . $_ENV["SQL"] . "cats/select_cat.sql";
         $this->queryResults = $this->database->search($pathSQL, ["id" => $payload["id"]]);
     }
 
@@ -56,7 +56,7 @@ class CatsServices extends Initialize
      */
     public function insertCat(array $payload): void
     {
-        $pathSQL = $_ENV["ROOT"] . $this->PATH["SQL"] . "cats/insert_cat.sql";
+        $pathSQL = $_ENV["ROOT"] . $_ENV["SQL"] . "cats/insert_cat.sql";
         $this->database->mutate($pathSQL, [
             "name" => $payload["name"],
             "style" => $payload["style"],
@@ -78,7 +78,7 @@ class CatsServices extends Initialize
      */
     public function updateCat(array $payload): void
     {
-        $pathSQL = $_ENV["ROOT"] . $this->PATH["SQL"] . "cats/update_cat.sql";
+        $pathSQL = $_ENV["ROOT"] . $_ENV["SQL"] . "cats/update_cat.sql";
         $this->database->mutate($pathSQL, [
             "id" => $payload["id"],
             "name" => $payload["name"],
@@ -99,9 +99,9 @@ class CatsServices extends Initialize
     public function deleteCat(array $payload): void
     {   
         if (isset($payload["id"])) {
-            $this->selectMovie($payload);
+            $this->selectCat($payload);
         }
-        $pathSQL = $_ENV["ROOT"] . $this->PATH["SQL"] . "cats/delete_cat.sql";
+        $pathSQL = $_ENV["ROOT"] . $_ENV["SQL"] . "cats/delete_cat.sql";
         $this->queryResults = $this->database->mutate($pathSQL, ["id" => $payload["id"]]);
     }
 

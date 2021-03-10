@@ -3,8 +3,8 @@
 namespace App\Controllers;
 
 use App\Services\CatsServices;
+use Rookie\DataComponents\LogMaker;
 use Rookie\Legacy\Controller;
-use Rookie\Kernel\ErrorException;
 
 /**
  * @Controller
@@ -17,13 +17,9 @@ class CatsController extends Controller
     public function __construct()
     {
         parent::__construct();
+        $this->log = new LogMaker();
         $this->catsServices = new CatsServices();
-        $this->CatsController(
-            $this->request->method, 
-            $this->request->json, 
-            $this->request->query ,
-            $this->request->payload
-        );
+        $this->setResponse($this->CatsController());
     }
 
     public function __destruct()
@@ -37,91 +33,83 @@ class CatsController extends Controller
      *
      * @return void
      **/
-    private function CatsController(string $method, bool $json, array $query, array $payload)
+    public function CatsController()
     {
-        $method = 'error';
-        if (!$json && $query != []) {
-            $this->initialView();
-            $method = "initialView";
+        $httpContent = '';
+        if ($this->request->method === 'VIEW') {
+            $httpContent = $this->initialView();
+        } else if ($this->request->method === 'GET') {
+            $httpContent = $this->getCat();
+        } else if ($this->request->method === 'POST') {
+            $httpContent = $this->postCat();
+        } else if ($this->request->method === 'DELETE') {
+            $httpContent = $this->deleteCat();
+        } else if ($this->request->method === 'PUT') {
+            $httpContent = $this->putCat();
         } else {
-            //has json
-            if ($method === 'GET' && $payload != []) {
-                $this->getCat($payload);
-                $method = "getCat";
-            } else if ($method === 'POST' && $payload != []) {
-                $this->postCat($payload);
-                $method = "postCat";
-            } else if ($method === 'DELETE' && $payload != []) {
-                $this->deleteCat($payload);
-            } else if ($method === 'PUT' && $payload != []) {
-                $this->putCat($payload);
-                $method = "putCat";
-            } else {
-                header('Location:error');
-            }
+            $this->hasError = true;
         }
-        return $method;
+        return $httpContent;
     }
 
-
-   /**
-    * Display a cats Collection
-    * @method: 'VIEW'
-    * @Response: 'Content-Type: text/html'
-    */
+    /**
+     * Display a cats Collection
+     * @method: 'VIEW'
+     * @Response: 'Content-Type: text/html'
+     */
     private function initialView()
     {
         $this->catsServices->selectCats();
-        $this->VIEW("cats/cats.html.twig",[ "cats" => $this->catsServices->getQueryResults() ], 200);
+        $cats = $this->catsServices->getQueryResults();
+        return $this->response->create(["cats" => $cats], 200, "cats/cats.html.twig");
     }
-  
-     /**
-     * One Cat 
+
+    /**
+     * One Cat
      * @method: 'GET'
      * @Response: 'Content-Type: application/json'
      */
-     private function getCat(array $payload)
-     {
-        $this->catsServices->selectCat($payload);
-        $this->JSON($this->catsServices->getQueryResults(),200);
-     }
-    
-     /**
-     * One Cat 
-     * @Query: 'POST'
+    private function getCat()
+    {
+        $this->catsServices->selectCat($this->request->payload);
+        $cat = $this->catsServices->getQueryResults();
+        return $this->response->create($cat, 200);
+    }
+
+    /**
+     * One Cat
      * @method: 'POST'
      * @Response: 'Content-Type: application/json'
      */
-     private function postCat(array $payload)
-     {
-        $this->catsServices->insertCat($payload);
-        $this->JSON($this->catsServices->getQueryResults(),200);
-     }
-    
-     /**
-     * One Cat 
-     * @Query: 'POST'
+    private function postCat()
+    {
+        $this->catsServices->insertCat($this->request->payload);
+        $cat = $this->catsServices->getQueryResults();
+        return $this->JSON($cat, 200);
+    }
+
+    /**
+     * One Cat
      * @method: 'DELETE'
      * @Response: 'Content-Type: application/json'
      */
-     private function deleteCat(array $payload)
-     {
-        $this->catsServices->deleteCat($payload);
-        $this->JSON($this->catsServices->getQueryResults(),200);
-     }
-    
-     /**
-     * One Cat 
-     * @Query: 'POST'
+    private function deleteCat()
+    {
+        $this->catsServices->deleteCat($this->request->payload);
+        $cat = $this->catsServices->getQueryResults();
+        return $this->JSON($cat, 200);
+    }
+
+    /**
+     * One Cat
      * @method: 'PUT'
      * @Response: 'Content-Type: application/json'
      */
-     private function putCat(array $payload)
-     {
-        $this->catsServices->updateCat($payload);
-        $this->JSON($this->catsServices->getQueryResults(),200);
-     }
-    
-  
-    
+    private function putCat()
+    {
+        $this->catsServices->updateCat($this->request->payload);
+        $cat = $this->catsServices->getQueryResults();
+        return $this->JSON($cat, 200);
+    }
+
 }

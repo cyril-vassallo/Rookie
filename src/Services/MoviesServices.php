@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 
-use Rookie\DataComponent\Initialize;
+use Rookie\DataComponents\Initialize;
 
 /**
  * @Service
@@ -39,7 +39,7 @@ class MoviesServices extends Initialize
      */
     public function selectMovies()
     {
-        $pathSQL = $_ENV["ROOT"] . $this->PATH["SQL"] . "movies/select_movies.sql";
+        $pathSQL = $_ENV["ROOT"] . $_ENV["SQL"] . "movies/select_movies.sql";
         $this->queryResults = $this->database->search($pathSQL, array());
     }
 
@@ -51,7 +51,7 @@ class MoviesServices extends Initialize
      */
     public function selectMovie(array $payload)
     {
-        $pathSQL = $_ENV["ROOT"] . $this->PATH["SQL"] . "movies/select_movie.sql";
+        $pathSQL = $_ENV["ROOT"] . $_ENV["SQL"] . "movies/select_movie.sql";
         $this->queryResults = $this->database->search($pathSQL, array("id" => $payload["id"]));
 
     }
@@ -65,7 +65,7 @@ class MoviesServices extends Initialize
     public function insertMovie(array $payload)
     {
 
-        $pathSQL = $_ENV["ROOT"] . $this->PATH["SQL"] . "movies/insert_movie.sql";
+        $pathSQL = $_ENV["ROOT"] . $_ENV["SQL"] . "movies/insert_movie.sql";
         $this->database->mutate($pathSQL, array(
             "title" => $payload["title"],
             "created_at" => $payload["created_at"],
@@ -89,7 +89,7 @@ class MoviesServices extends Initialize
         if (isset($payload["id"])) {
             $this->selectMovie($payload);
         }
-        $pathSQL = $_ENV["ROOT"] . $this->PATH["SQL"] . "movies/delete_movie.sql";
+        $pathSQL = $_ENV["ROOT"] . $_ENV["SQL"] . "movies/delete_movie.sql";
         $this->database->mutate($pathSQL, array(
             "id" => $payload["id"],
         ));
@@ -103,7 +103,7 @@ class MoviesServices extends Initialize
      */
     public function updateMovie(array $payload)
     {   
-        $pathSQL = $_ENV["ROOT"] . $this->PATH["SQL"] . "movies/update_movie.sql";
+        $pathSQL = $_ENV["ROOT"] . $_ENV["SQL"] . "movies/update_movie.sql";
         $this->database->mutate($pathSQL, array(
             "id" => $payload["id"],
             "title" => $payload["title"],

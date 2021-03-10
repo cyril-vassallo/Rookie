@@ -1,8 +1,7 @@
 <?php
-namespace Rookie\DataComponent;
+namespace Rookie\DataComponents;
 
 use Rookie\DataComponents\Database;
-use Rookie\Kernel\Loader;
 
 /**
  * @author Cyril VASSALLO
@@ -19,20 +18,6 @@ class Initialize
     protected $database;
 
     /**
-     * PATH Constants for services
-     *
-     * @var [array]
-     */
-    protected $PATH;
-
-    /**
-     * Request payload for services
-     *
-     * @var [array]
-     */
-    protected $payload;
-
-    /**
      * Database response after query for services
      *
      * @var [array]
@@ -44,7 +29,6 @@ class Initialize
      */
     public function __construct()
     {
-        $this->PATH = Loader::pathsLoader();
         $this->database = new Database();
         $this->queryResults = [];
     }
@@ -55,6 +39,7 @@ class Initialize
     public function __destruct()
     {
         unset($this->database);
+        unset($this->queryResults);
     }
 
 }

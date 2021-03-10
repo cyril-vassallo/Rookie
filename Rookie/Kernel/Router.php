@@ -1,16 +1,12 @@
 <?php
 namespace Rookie\Kernel;
 
-use Rookie\Kernel\Loader;
-use App\Services\LogServices;
-
 /**
  * @author Cyril VASSALLO
  * Manage routes and requested Controller
  */
 class Router
 {
-    private $PATH;
     private $defaultRoute;
     private $errorRoute;
     private $controller;
@@ -25,7 +21,6 @@ class Router
      */
     public function __construct()
     {
-        $this->PATH = Loader::pathsLoader();
         $this->parseRoutesFile();
         $this->catchRouteFromHttpRequest();
         //$this->checkAuthorizedUsers();
@@ -62,7 +57,7 @@ class Router
      */
     private function parseRoutesFile()
     {
-        $routesIniFile = $_ENV["ROOT"] . $this->PATH["CONF"] . 'routes.ini';
+        $routesIniFile = $_ENV["ROOT"] . $_ENV["CONF"] . 'routes.ini';
         if (is_file($routesIniFile)) {
             $parsedRoutesFile = parse_ini_file($routesIniFile, false);
             $this->routes = $parsedRoutesFile['ROUTE'];
@@ -113,7 +108,7 @@ class Router
     private function isControllerExist()
     {
         $this->controller = ucfirst($this->currentRoute . 'Controller');
-        if (!(file_exists($_ENV["ROOT"] . $this->PATH["CONTROLLER"] . $this->controller . ".php"))) {
+        if (!(file_exists($_ENV["ROOT"] . $_ENV["CONTROLLER"] . $this->controller . ".php"))) {
             $this->controller = ucfirst($this->errorRoute . 'Controller');
         }
     }
