@@ -19,28 +19,43 @@ class Request
         $this->payload = [];
         $this->method = 'VIEW';
         $this->json = false;
-        $this->setPostPayload();
-        $this->setGetQuery();
-        $this->isRouteParamExist();
-        $this->isJsonParamExist();
-        $this->isMethodParamExist();
+        $this->setPayload();
+        $this->setQuery();
+        $this->setRoute();
+        $this->setJson();
+        $this->setMethod();
     }
 
-    private function setPostPayload()
+    /**
+     * set payload property
+     *
+     * @return void
+     */
+    public function setPayload(): void
     {
         foreach ($_POST as $key => $val) {
             $this->payload[$key] = htmlspecialchars($val, ENT_QUOTES);
         }
     }
 
-    private function setGetQuery()
+    /**
+     * set query property
+     *
+     * @return void
+     */
+    public function setQuery(): void
     {
         foreach ($_GET as $key => $val) {
             $this->query[$key] = htmlspecialchars($val, ENT_QUOTES);
         }
     }
 
-    private function isRouteParamExist()
+    /**
+     * set route property
+     *
+     * @return void
+     */
+    public function setRoute(): void
     {$hasNoPayloadRoute = !isset($this->payload["route"]) || $this->payload["route"] == '';
         $hasNoQueryRoute = !isset($this->query["route"]) || $this->query["route"] == '';
         if ($hasNoPayloadRoute && $hasNoQueryRoute) {
@@ -52,7 +67,12 @@ class Request
         }
     }
 
-    private function isJsonParamExist()
+    /**
+     * set Json property
+     *
+     * @return void
+     */
+    public function setJson(): void
     {
         if (!(isset($this->payload["format"])) || $this->payload["format"] == "html") {
             $this->json = false;
@@ -66,16 +86,70 @@ class Request
         }
     }
 
-    private function isMethodParamExist()
-    {
+    /**
+     * set Method property
+     *
+     * @return void
+     */
+    public function setMethod(): void
+    {   
+      
+        //Case 1 Payload has method     
+        //      - hasJSON     
+        //Case 2 query has method
+        //       - hasJSON
+        //case 3 no method detected
+        //      - hasJSON
+        //Case 4 
+
+        $hasOptions = $this->hasOptions();
         $this->method = 'VIEW';
+         
         if (isset($this->payload["method"])) {
             $this->method = strtoupper($this->payload['method']);
-        } else if (isset($this->query["method"])) {
+        } 
+        else if (isset($this->query["method"])) {
             $this->method = strtoupper($this->query['method']);
-        } else {
-            $this->method = 'VIEW';
         }
+        else if (!isset($this->query["method"]) && !isset($this->payload['method'])) {
+            $this->method = "VIEW";
+        } 
     }
 
+    /**
+     * Check if payload is empty or not
+     *
+     * @return boolean
+     */
+    public function hasPayload(): bool
+    {
+        return $this->payload !== [] ? true : false;
+    }
+
+    /**
+     * Check if query string is empty or not
+     *
+     * @return boolean
+     */
+    public function hasQueryString(): bool
+    {
+        $copyQuery = $this->query;
+        unset($copyQuery["route"]);
+        return $copyQuery !== [] ? true : false;
+    }
+
+    /**
+     * Check if options exist in query String
+     *
+     * @return boolean
+     */
+    public function hasOptions(): bool
+    {
+        $hasOptions = isset($this->query["option1"])
+            ||
+            (isset($this->query["option1"]) && isset($this->query["option2"]))
+            ||
+            (isset($this->query["option1"]) && isset($this->query["option2"]) && isset($this->query["option3"]));
+        return $hasOptions;
+    }
 }

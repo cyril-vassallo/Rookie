@@ -2,24 +2,20 @@
 
 namespace App\Controllers;
 
-use Exception;
 use Rookie\Legacy\Controller;
 
 /**
  * @Controller
- * @Route: 'movies'
+ * @Route: 'home'
  */
 class HomeController extends Controller
 {
 
-    private $moviesService;
-
     public function __construct()
     {
         parent::__construct();
-        $this->HomeController($this->request->method, $this->request->json);
-    
-
+        /* parent method */
+        $this->setControllerResponse($this->HomeController());
     }
 
     public function __destruct()
@@ -29,24 +25,25 @@ class HomeController extends Controller
 
     /**
      * Control the action server according to different methods for the home route
-     *
-     * @param string $method
-     * @return void
      */
-    private function HomeController(string $method, bool $json)
+    public function HomeController(): string
     {
-        if (!$json) {
-            $this->InitialView();
+        $htmlContent = '';
+        if ($this->request->method === 'VIEW') {
+            $htmlContent  = $this->InitialView();
+        }else {
+            /* parent property */
+            $this->hasError = true;
         }
+        return $htmlContent;
     }
 
     /**
      * Read a movies Collection
-     * @Query: 'GET'
      * @method: 'VIEW'
      * @Response: 'Content-Type: text/Html'
      */
-    private function InitialView()
+    public function InitialView()
     {
         $controllerData = [
             'title' => 'Hey Rookie, Welcome !',
@@ -55,9 +52,8 @@ class HomeController extends Controller
             'nextController' => 'MoviesController',
             'route' => 'movies',
         ];
-        $this->VIEW('home/home.html.twig', $controllerData, 200);
-    
-       
+        return $this->response->create($controllerData, 200, 'home/home.html.twig', );
+
     }
 
 }

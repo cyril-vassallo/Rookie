@@ -13,17 +13,6 @@ use Rookie\Kernel\Router;
 class Loader
 {
 
-    private $_PATHS;
-
-    /**
-     * Getter of $_PATHS only
-     * @return array $_PATHS
-     */
-    public function getPATHS()
-    {
-        return $this->_PATHS;
-    }
-
     /**
      * Loader of Rookie
      * @return void
@@ -39,11 +28,17 @@ class Loader
         session_start();
         //Route the application
         $router = new Router();
+        $hasErrorRoute = $router->getHasErrorRoute();
         //Execute the required Controller
         try
         {
             $app = $router->getControllerInstance();
-            !$app->hasError ?  $response = $app->getResponse() :  header("Location:error");
+            if($hasErrorRoute){
+                !$app->hasError ?  $response = $app->getControllerResponse() :  header("Location:".$router->getErrorRoute());
+            }else{
+                $response = $app->getControllerResponse();
+            }
+   
             echo $response;
         } catch (Exception $e) {
             echo $e;

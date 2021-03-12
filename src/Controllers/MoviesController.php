@@ -18,12 +18,8 @@ class MoviesController extends Controller
     {
         parent::__construct();
         $this->moviesService = new MoviesServices();
-        $this->response = $this->MoviesController(
-            $this->request->method,
-            $this->request->json,
-            $this->request->query,
-            $this->request->payload
-        );
+        /* parent method */
+        $this->setControllerResponse($this->MoviesController());
     }
 
     public function __destruct()
@@ -32,91 +28,92 @@ class MoviesController extends Controller
         parent::__destruct();
     }
 
-    /**
+       /**
      * Control the action server for the movies route
-     *
-     * @param string $method
      * @return void
-     */
-    private function MoviesController(string $method, bool $json, array $query, array $payload)
+     **/
+    public function MoviesController(): string
     {
-        $httpContent = "";
-        if ($method === 'VIEW' && !$json && $query != []) {
-            $httpContent = $this->initialView();
-        } else if ($method === 'DELETE' && $json && $payload != []) {
-            $httpContent = $this->deleteMovie($payload);
-        } else if ($method === 'POST' && $json && $payload != []) {
-            $httpContent = $this->postMovie($payload);
-        } else if ($method === 'PUT' && $json && $payload != []) {
-            $httpContent = $this->putMovie($payload);
-        } else if ($method === 'GET' && $json && $payload != []) {
-            $httpContent = $this->getMovie($payload);
-        } else {
-            $this->hasError = true;
-        }
+        $hasPayload = $this->request->hasPayload();
+        $method = $this->request->method;
+        $hasJson =  $this->request->json;
+        $httpContent = '';
+ 
 
+        if (!$hasJson) {
+            if ($method === 'VIEW') {
+                $httpContent = $this->initialView();
+            }
+        } else if ($hasJson && $hasPayload) {
+            if ($method === 'GET') {
+                $httpContent = $this->getMovie();
+            } else if ($method === 'POST') {
+                $httpContent = $this->postMovie();
+            } else if ($method === 'DELETE') {
+                $httpContent = $this->deleteMovie();
+            } else if ($method === 'PUT') {
+                $httpContent = $this->putMovie();
+            }
+        } else {
+            $this->hasError;
+        }
         return $httpContent;
     }
 
     /**
      * Display a movies Collection
-     * @Query: 'GET'
      * @method: 'VIEW'
      * @Response: 'Content-Type: text/html'
      */
-    private function initialView()
+    public function initialView(): string
     {
         $this->moviesService->selectMovies();
         $movies = $this->moviesService->getQueryResults();
-        return $this->VIEW('movies/movies.html.twig', ['movies' => $movies], 200);
+        return $this->response->create(['movies' => $movies], 200, 'movies/movies.html.twig');
     }
 
     /**
      * Delete one Movie
-     * @Query: 'POST'
      * @method: 'DELETE'
      * @Response: 'Content-Type: application/json'
      */
-    private function deleteMovie(array $payload)
+    public function deleteMovie(): string
     {
-        $this->moviesService->deleteMovie($payload);
-        return $this->JSON($this->moviesService->getQueryResults(), 200);
+        $this->moviesService->deleteMovie($this->request->payload);
+        return $this->response->create($this->moviesService->getQueryResults(), 200);
     }
 
     /**
      * Create one Movie
-     * @Query: 'POST'
      * @method: 'POST'
      * @Response: 'Content-Type: application/json'
      */
-    private function postMovie(array $payload)
+    public function postMovie(): string
     {
-        $this->moviesService->insertMovie($payload);
-        return $this->JSON($this->moviesService->getQueryResults(), 200);
+        $this->moviesService->insertMovie($this->request->payload);
+        return $this->response->create($this->moviesService->getQueryResults(), 200);
     }
 
     /**
      * Update one Movie
-     * @Query: 'POST'
      * @method: 'PUT'
      * @Response: 'Content-Type: application/json'
      */
-    private function putMovie(array $payload)
+    public function putMovie(): string
     {
-        $this->moviesService->updateMovie($payload);
-        return $this->JSON($this->moviesService->getQueryResults(), 200);
+        $this->moviesService->updateMovie($this->request->payload);
+        return $this->response->create($this->moviesService->getQueryResults(), 200);
     }
 
     /**
      * Read one Movie
-     * @Query: 'POST'
      * @method: 'GET'
      * @Response: 'Content-Type: application/json'
      */
-    private function getMovie(array $payload)
+    public function getMovie(): string
     {
-        $this->moviesService->selectMovie($payload);
-        return $this->JSON($this->moviesService->getQueryResults(), 200);
+        $this->moviesService->selectMovie($this->request->payload);
+        return $this->response->create($this->moviesService->getQueryResults(), 200);
     }
 
 }

@@ -40,7 +40,7 @@ class Response
      * @param int $code
      * @return void
      */
-    protected function JSON($data, int $code = 200)
+    public function JSON($data, int $code = 200)
     {
         header("Content-type:application/json");
         http_response_code($code);

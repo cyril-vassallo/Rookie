@@ -14,7 +14,7 @@ class Controller
 {
 
     protected $request;
-    public $response;
+    protected $response;
     public $hasError;
 
     public function __construct()
@@ -31,11 +31,11 @@ class Controller
         unset($this->hasError);
     }
 
-    public function setResponse(string $content):void{
+    public function setControllerResponse(string $content):void{
         $this->response->content = $content;
     }
 
-    public function getResponse(): string{
+    public function getControllerResponse(): string{
         return $this->response->content;
     }
 

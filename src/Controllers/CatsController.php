@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Services\CatsServices;
-use Rookie\DataComponents\LogMaker;
 use Rookie\Legacy\Controller;
 
 /**
@@ -17,9 +16,9 @@ class CatsController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->log = new LogMaker();
         $this->catsServices = new CatsServices();
-        $this->setResponse($this->CatsController());
+        /* parent method */
+        $this->setControllerResponse($this->CatsController());
     }
 
     public function __destruct()
@@ -30,24 +29,40 @@ class CatsController extends Controller
 
     /**
      * Control the action server for the cats route
-     *
      * @return void
      **/
-    public function CatsController()
+    public function CatsController(): string
     {
+        $hasPayload = $this->request->hasPayload();
+        $method = $this->request->method;
+        $hasJson =  $this->request->json;
         $httpContent = '';
-        if ($this->request->method === 'VIEW') {
-            $httpContent = $this->initialView();
-        } else if ($this->request->method === 'GET') {
-            $httpContent = $this->getCat();
-        } else if ($this->request->method === 'POST') {
-            $httpContent = $this->postCat();
-        } else if ($this->request->method === 'DELETE') {
-            $httpContent = $this->deleteCat();
-        } else if ($this->request->method === 'PUT') {
-            $httpContent = $this->putCat();
+ 
+
+        if (!$hasJson) {
+            echo 'NoJSON->';
+            if ($method === 'VIEW') {
+                echo 'VIEW';
+                $httpContent = $this->initialView();
+            }
+        } else if ($hasJson && $hasPayload) {
+            echo 'JSON & PAYLOAD->';
+            if ($method === 'GET') {
+                echo 'GET';
+                $httpContent = $this->getCat();
+            } else if ($method === 'POST') {
+                echo 'POST';
+                $httpContent = $this->postCat();
+            } else if ($method === 'DELETE') {
+                echo 'DELETE';
+                $httpContent = $this->deleteCat();
+            } else if ($method === 'PUT') {
+                echo 'PUT';
+                $httpContent = $this->putCat();
+            }
         } else {
-            $this->hasError = true;
+            echo 'ERROR';
+            $this->hasError;
         }
         return $httpContent;
     }
@@ -57,7 +72,7 @@ class CatsController extends Controller
      * @method: 'VIEW'
      * @Response: 'Content-Type: text/html'
      */
-    private function initialView()
+    public function initialView(): string
     {
         $this->catsServices->selectCats();
         $cats = $this->catsServices->getQueryResults();
@@ -69,7 +84,7 @@ class CatsController extends Controller
      * @method: 'GET'
      * @Response: 'Content-Type: application/json'
      */
-    private function getCat()
+    public function getCat(): string
     {
         $this->catsServices->selectCat($this->request->payload);
         $cat = $this->catsServices->getQueryResults();
@@ -81,11 +96,11 @@ class CatsController extends Controller
      * @method: 'POST'
      * @Response: 'Content-Type: application/json'
      */
-    private function postCat()
+    public function postCat(): string
     {
         $this->catsServices->insertCat($this->request->payload);
         $cat = $this->catsServices->getQueryResults();
-        return $this->JSON($cat, 200);
+        return $this->response->create($cat, 200);
     }
 
     /**
@@ -93,11 +108,11 @@ class CatsController extends Controller
      * @method: 'DELETE'
      * @Response: 'Content-Type: application/json'
      */
-    private function deleteCat()
+    public function deleteCat(): string
     {
         $this->catsServices->deleteCat($this->request->payload);
         $cat = $this->catsServices->getQueryResults();
-        return $this->JSON($cat, 200);
+        return $this->response->create($cat, 200);
     }
 
     /**
@@ -105,11 +120,11 @@ class CatsController extends Controller
      * @method: 'PUT'
      * @Response: 'Content-Type: application/json'
      */
-    private function putCat()
+    public function putCat(): string
     {
         $this->catsServices->updateCat($this->request->payload);
         $cat = $this->catsServices->getQueryResults();
-        return $this->JSON($cat, 200);
+        return $this->response->create($cat, 200);
     }
 
 }

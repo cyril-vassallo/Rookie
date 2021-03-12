@@ -1,4 +1,6 @@
 <?php
+//Do not remove this class it display 404 page on route error
+//If remove be sure to update manually the  file Rookie\Kernel\Loader.php line 46
 
 namespace App\Controllers;
 
@@ -14,7 +16,7 @@ class ErrorController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->response = $this->ErrorController();
+        $this->setControllerResponse($this->ErrorController());
     }
 
     public function __destruct()
@@ -31,7 +33,7 @@ class ErrorController extends Controller
     {
         $code = "404";
         $message = 'This page dosn\'t exist';
-        return $this->VIEW('error/error.html.twig', ['message' => $message, 'code' => $code], 404);
+        return $this->response->create(['message' => $message, 'code' => $code], 404, 'error/error.html.twig');
     }
 
 }
