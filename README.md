@@ -1,5 +1,7 @@
 # ROOKIE - 2021
 
+MIT Licence - Your are totaly free to use, modify, fork contribute and duplicate this project
+
 ![Rookie](/public/assets/images/Rookie-welcome.png "Rookie")	
 
 Rookie is a PHP from scratch very lightweight framework for rookie developers (2Mo)
